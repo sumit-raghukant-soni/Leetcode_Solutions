@@ -9,14 +9,14 @@ public:
     }
     bool repeatedSubstringPattern(string s) {
         string tmp = "";
-        set<char> st;
+        int st[26] = {0};
 
         for(int i=0; i<s.length(); i++){
-            if(st.find(s[i]) != st.end() && check(s, tmp, i)){
+            if(st[s[i] - 'a'] > 0 && check(s, tmp, i)){
                 return true;
             }
             tmp += s[i];
-            st.insert(s[i]);
+            st[s[i] - 'a']++;
         }
 
         return false;
