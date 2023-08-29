@@ -6,7 +6,7 @@ public:
         for(int i=0; i<n; i++)
             ans += 'a';
 
-        if(n%2 == 0)
+        if((n&1) == 0)
             ans[n-1]++;
 
         return ans;
