@@ -1,29 +1,28 @@
 class LUPrefix {
 public:
     int sz;
-    vector<int> map;
-    int op = 0, ll = 0;
-    int l = 0;
+    vector<bool> map;
+    int ptr = 0;
     LUPrefix(int n) {
         sz = n;
-        map = vector<int>(n, 0);
+        map = vector<bool>(n, false);
     }
     
     void upload(int video) {
-        map[video-1] = 1;
-        op++;
+        int i = video-1;
+        map[i] = true;
+        if(i == ptr){
+            i++;
+            ptr++;
+            while(i < sz && map[i] != false){
+                i++;
+                ptr++;
+            }
+        }
     }
     
     int longest() {
-        if(ll == op) return l;
-        int i=0, cnt = 0;
-        while(i < sz && map[i] != 0){
-            i++;
-            cnt++;
-        }
-        ll = op;
-        l = cnt;
-        return l;
+        return ptr;
     }
 };
 
