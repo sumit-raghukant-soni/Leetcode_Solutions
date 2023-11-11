@@ -14,7 +14,6 @@ public:
                 tmp++;
                 if(tmp > n) tmp = 1;
             }
-            cout << endl;
         }
 
         int maxi = *max_element(arr.begin(), arr.end());
