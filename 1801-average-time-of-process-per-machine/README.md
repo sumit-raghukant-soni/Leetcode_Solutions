@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/average-time-of-process-per-machine/">1801. Average Time of Process per Machine</a></h2><h3>Easy</h3><hr><p>Table: <code>Activity</code></p>
+<h2><a href="https://leetcode.com/problems/average-time-of-process-per-machine">Average Time of Process per Machine</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>Table: <code>Activity</code></p>
 
 <pre>
 +----------------+---------+
