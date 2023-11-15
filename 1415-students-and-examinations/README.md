@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/students-and-examinations">1415. Students and Examinations</a></h2><h3>Easy</h3><hr><p>Table: <code>Students</code></p>
+<h2><a href="https://leetcode.com/problems/students-and-examinations">Students and Examinations</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>Table: <code>Students</code></p>
 
 <pre>
 +---------------+---------+
