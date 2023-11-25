@@ -20,8 +20,8 @@ public:
         int sz1 = str1.length(), sz2 = str2.length();
 
         string tmp = "", ans = "";
-        int j=0;
-        while(j<min(sz1, sz2)){
+        int j=0, gcd = __gcd(sz1, sz2);
+        while(j<gcd){
             if(str1[j] == str2[j]) {
                 tmp += str1[j++];
                 bool c = check(tmp, str1, str2);
