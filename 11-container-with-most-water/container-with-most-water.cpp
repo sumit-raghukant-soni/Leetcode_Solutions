@@ -8,8 +8,8 @@ public:
             ans = max(ans, (j-i)*min(height[i], height[j]));
             if(height[i] < height[j]) i++;
             else if(height[j] < height[i]) j--;
-            else if(height[i+1] > height[j-1]) j--;
-            else i++;
+            else if(height[i+1] > height[j-1]) i++;
+            else j--;
         }
 
         return ans;
