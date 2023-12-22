@@ -8,6 +8,7 @@ public:
         solve(root->right, ans, max(maxi, root->val));
     }
     int goodNodes(TreeNode* root) {
+        ios_base::sync_with_stdio(false); cin.tie(NULL);cout.tie(NULL);
         if(root == NULL) return {};
 
         int ans = 0;
