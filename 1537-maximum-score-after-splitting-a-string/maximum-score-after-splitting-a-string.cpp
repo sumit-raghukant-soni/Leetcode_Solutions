@@ -1,16 +1,15 @@
 class Solution {
 public:
     int maxScore(string s) {
-        int sz = s.length();
-        int o=0, z=0, ans=0;
+        int ones = 0, zero = 0, ans = 0, sz = s.length();
 
-        for(int i=0; i<sz; i++)
-            if(s[i] == '1') o++;
+        for(auto i : s)
+            if(i == '1') ones++;
 
         for(int i=0; i<sz-1; i++){
-            if(s[i] == '0') z++;
-            else o--;
-            ans = max(z + o, ans);
+            if(s[i] == '1') ones--;
+            else zero++;
+            ans = max(zero + ones, ans);
         }
 
         return ans;
