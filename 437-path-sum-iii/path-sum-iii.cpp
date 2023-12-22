@@ -16,6 +16,7 @@ public:
         solve(root->right, ans, target, prev);
     }
     int pathSum(TreeNode* root, int targetSum) {
+        ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
         int ans = 0;
 
         solve(root, ans, targetSum, {});
