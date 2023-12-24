@@ -4,8 +4,7 @@ public:
         int cnt = 0;
 
         while(start | goal){
-            int r1 = (start&1), r2 = (goal&1);
-            if(r1 != r2) cnt++;
+            if((start&1) != (goal&1)) cnt++;
             start = start >> 1, goal = goal >> 1;
         }
 
