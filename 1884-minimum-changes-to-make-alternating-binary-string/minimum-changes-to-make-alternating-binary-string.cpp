@@ -1,19 +1,19 @@
 class Solution {
 public:
     int minOperations(string s) {
-        int d1 = 0, d2 = 0, sz = s.length();
+        int odd = 0, even = 0, sz = s.length();
 
         for(int i=0; i<sz; i++){
-            if((i&1) == 0){
-                if(s[i] != '0') d1++;
-                else d2++;
+            if(i%2 == 0){
+                if(s[i] != '0') even++;
+                else odd++;
             }
             else{
-                if(s[i] != '0') d2++;
-                else d1++;
+                if(s[i] != '1') even++;
+                else odd++;
             }
         }
 
-        return min(d1, d2);
+        return odd < even ? odd : even;
     }
 };
