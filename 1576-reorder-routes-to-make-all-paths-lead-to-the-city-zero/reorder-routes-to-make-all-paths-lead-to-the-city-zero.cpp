@@ -12,19 +12,23 @@ public:
             out[c].push_back(n);
         }
 
+        vis[0]++;
         while(!q.empty()){
             int front = q.front();
-            cout << front << endl;
-            vis[front]++;
+            // cout << front << endl;
             q.pop();
             for(auto i : out[front]){
                 if(!vis[i]){
+                    vis[i]++;
                     cnt++;
                     q.push(i);
                 }
             }
             for(int i : in[front]){
-                if(!vis[i]) q.push(i);
+                if(!vis[i]){
+                    vis[i]++;
+                    q.push(i);
+                }
             }
         }
 
