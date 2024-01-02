@@ -2,20 +2,17 @@ class Solution {
 public:
     vector<vector<int>> findMatrix(vector<int>& nums) {
         unordered_map<int, int> mp;
-        for(auto i : nums) mp[i]++;
-
-        vector<vector<int>> ans;
-        while(mp.size() > 0){
-            vector<int> tmp;
-            for(auto i : mp){
-                if(mp[i.first] >= 1) {
-                    mp[i.first]--;
-                    tmp.push_back(i.first);
-                }
-            }
-            if(tmp.size() == 0) break;
-            ans.push_back(tmp);
+        int maxF = 0;
+        for(auto i : nums){
+            mp[i]++;
+            maxF = max(maxF, mp[i]);
         }
+        vector<vector<int>> ans(maxF);
+
+        for(auto i : mp){
+            for(int j=0; j<i.second; j++) ans[j].push_back(i.first);
+        }
+
         return ans;
     }
 };
