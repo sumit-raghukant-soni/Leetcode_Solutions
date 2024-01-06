@@ -8,14 +8,14 @@ public:
         
         sort(c.rbegin(), c.rend());
         long long int sum = 0;
-        multiset<int> st;
+        priority_queue<int> st;
         for(int i=0; i<sz; i++){
             sum += c[i].second;
-            st.insert(c[i].second);
+            st.push(-c[i].second);
             if(i > k-2){
                 ans = max(ans, sum * c[i].first);
-                sum -= *st.begin();
-                st.erase(st.begin());
+                sum += st.top();
+                st.pop();
             }
         }
 
