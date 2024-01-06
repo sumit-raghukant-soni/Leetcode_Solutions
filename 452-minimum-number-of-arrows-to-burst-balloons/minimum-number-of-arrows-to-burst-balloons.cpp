@@ -18,7 +18,6 @@ public:
                 s = points[i][0], e = points[i][1];
                 ans++;
             }
-            // cout << points[i][0] << ":" << points[i][1] << " ";
         }
 
         return ans;
