@@ -13,9 +13,6 @@ public:
                 nums[ind++] = nums[i];
                 cnt++;
             }
-            else{
-                while(i+1 < sz && nums[i] == nums[i+1]) i++;
-            }
         }
 
         return ind;
