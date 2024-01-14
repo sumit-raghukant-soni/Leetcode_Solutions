@@ -21,8 +21,8 @@ public:
     }
     
     int getRandom() {
-        unordered_map<int, int>::iterator i = mp.begin();
-        i = next(i, rand()%mp.size());
-        return i->first;
+        itr = mp.begin();
+        itr = next(itr, rand()%mp.size());
+        return itr->first;
     }
 };
