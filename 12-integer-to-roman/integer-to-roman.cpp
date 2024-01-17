@@ -1,24 +1,11 @@
 class Solution {
 public:
     string intToRoman(int num) {
-        string ans = "";
+        vector<string> thousand = {"", "M", "MM", "MMM"};
+        vector<string> hundred = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+        vector<string> tens = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+        vector<string> ones = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
 
-        while(num > 0){
-            if(num >= 1000) {ans += "M"; num -= 1000;}
-            else if(num >= 900) { ans += "CM"; num -= 900;}
-            else if(num >= 500) { ans += "D"; num -= 500;}
-            else if(num >= 400) { ans += "CD"; num -= 400;}
-            else if(num >= 100) { ans += "C"; num -= 100;}
-            else if(num >= 90) { ans += "XC"; num -= 90;}
-            else if(num >= 50) { ans += "L"; num -= 50;}
-            else if(num >= 40) { ans += "XL"; num -= 40;}
-            else if(num >= 10) { ans += "X"; num -= 10;}
-            else if(num >= 9) { ans += "IX"; num -= 9;}
-            else if(num >= 5) { ans += "V"; num -= 5;}
-            else if(num >= 4) { ans += "IV"; num -= 4;}
-            else { ans += 'I'; num -= 1;}
-        }
-
-        return ans;
+        return thousand[num/1000] + hundred[(num%1000)/100] + tens[(num%100)/10] + ones[(num%10)];
     }
 };
