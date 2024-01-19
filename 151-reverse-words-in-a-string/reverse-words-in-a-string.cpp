@@ -1,19 +1,17 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        int sz = s.length();
-        string ans = "", tmp;
+        string ans = "", tmp = "";
+        int sz = s.length(), i=0;
 
-        for(int i=0; i<sz; i++){
+        while(i < sz){
             tmp = "";
-            while(i<sz && s[i] == ' ') i++;
-            while(i<sz && s[i] != ' ') tmp += s[i++];
-            if(tmp != ""){
-                if(ans == "")
-                    ans = tmp;
-                else
-                    ans = tmp + " " + ans;
+            while(i < sz && s[i] != ' '){
+                tmp += s[i++];
             }
+            if(ans != "" && tmp != "") ans = ' ' + ans;
+            ans = tmp + ans;
+            i++;
         }
 
         return ans;
