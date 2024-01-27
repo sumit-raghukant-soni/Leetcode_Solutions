@@ -1,41 +1,39 @@
 class Solution {
 public:
-    void rotate(vector<vector<int>>& matrix) {
-        int er=matrix.size()-1, ec=matrix[0].size()-1, sr=0,sc=0,i,j,k=0,size=matrix.size()-1;
-
-        while(sc<matrix.size()/2)
-        {
-            k=0;
-            while(k<size)
-            {
-                for(i=sr+1; i<=er; i++)
-                {
-                    swap(matrix[i][sc], matrix[i-1][sc]);
+    void rotate2(int sr, int sc, int er, int ec, int rotations, vector<vector<int>>& matrix){
+        for(int k=0; k<rotations; k++){
+            int tmp = matrix[sr][sc], b;
+            for(int i=sc; i<=ec; i++){
+                if(i-1 >= sc){
+                    b = matrix[sr][i];
+                    matrix[sr][i] = tmp;
+                    tmp = b;
                 }
-                for(i=sc+1; i<=ec;i++)
-                {
-                    swap(matrix[er][i], matrix[er][i-1]);
-                }
-                for(i=er-1; i>=sr; i--)
-                {
-                    swap(matrix[i][ec], matrix[i+1][ec]);
-                }
-                for(i=ec-1; i>=sc && sc != matrix.size()/2; i--)
-                {
-                    swap(matrix[sc][i], matrix[sc][i+1]);
-                }
-                k++;
             }
-            for(i=sc; i<ec && sc != matrix.size()/2;i++)
-            {
-                swap(matrix[sc][i], matrix[sc][i+1]);
+            for(int i=sr+1; i<=er; i++){
+                b = matrix[i][ec];
+                matrix[i][ec] = tmp;
+                tmp = b;
             }
-            sc++;
-            sr++;
-            er--;
-            ec--;
-            size-=2;
+            for(int i=ec-1; i>=sc; i--){
+                b = matrix[er][i];
+                matrix[er][i] = tmp;
+                tmp = b;
+            }
+            for(int i=er-1; i>=sr; i--){
+                b = matrix[i][sc];
+                matrix[i][sc] = tmp;
+                tmp = b;
+            }
         }
-
+    }
+    void rotate(vector<vector<int>>& matrix) {
+        int sz = matrix.size(), sr=0, sc=0, er=sz-1, ec=sz-1;
+        int rotations = sz-1;
+        for(int i=0; i<(sz+1)/2; i++){
+            rotate2(sr, sc, er, ec, rotations, matrix);
+            rotations -= 2;
+            sr++, sc++, er--, ec--;
+        }
     }
 };
