@@ -1,18 +1,24 @@
+using func = function<int(int, int)>;
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
-        stack<int> st;
         int sz = tokens.size();
+        stack<int> st;
+        unordered_map<string, func> mp = {
+            {"+", [] (int a, int b) {return a + b; } },
+            {"-", [] (int a, int b) {return a - b; } },
+            {"*", [] (int a, int b) {return a * b; } },
+            {"/", [] (int a, int b) {return a / b; } }
+        };
+
         for(int i=0; i<sz; i++){
-            if(tokens[i] == "*" || tokens[i] == "/" || tokens[i] == "+" || tokens[i] == "-"){
+            cout << i << " ";
+            if(mp.find(tokens[i]) != mp.end()){
                 int a = st.top();
                 st.pop();
                 int b = st.top();
                 st.pop();
-                if(tokens[i] == "*") st.push(b * a);
-                else if(tokens[i] == "/") st.push(b / a);
-                else if(tokens[i] == "+") st.push(b + a);
-                else st.push(b - a);
+                st.push(mp[tokens[i]](b, a));
             }
             else st.push(stoi(tokens[i]));
         }
