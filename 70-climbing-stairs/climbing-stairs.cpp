@@ -1,14 +1,14 @@
 class Solution {
 public:
     int climbStairs(int n) {
-        if(n <= 3) return n;
-        int ans = 0, a = 2, b = 3;
-        while(n > 3){
-            ans = a + b;
+        if(n < 4) return n;
+
+        int a = 2, b = 3, c = a+b;
+        for(int i=4; i<=n; i++){
+            c = a + b;
             a = b;
-            b = ans;
-            n--;
+            b = c;
         }
-        return ans;
+        return c;
     }
 };
