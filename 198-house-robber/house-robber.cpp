@@ -2,15 +2,17 @@ class Solution {
 public:
     int rob(vector<int>& nums) {
         int sz = nums.size();
+        if(sz == 1) return nums[0];
+        if(sz == 2) return max(nums[0], nums[1]);
         vector<int> dp(sz+1);
+        int a, b;
 
-        dp[0] = 0;
-        dp[1] = nums[0];
-        if(sz > 1) dp[2] = nums[1];
-        for(int i=3; i<=sz; i++){
-            dp[i] = max(dp[i-2], dp[i-3]) + nums[i-1];
+        for(int i=0; i<sz+1; i++){
+            if(i < sz) dp[i] = nums[i];
+            a = i-2 >= 0 ? dp[i-2] : 0, b = i-3 >= 0 ? dp[i-3] : 0;
+            dp[i] += max(a, b);
         }
 
-        return dp[sz] > dp[sz-1] ? dp[sz] : dp[sz-1];
+        return max(dp[sz], dp[sz-1]);
     }
 };
