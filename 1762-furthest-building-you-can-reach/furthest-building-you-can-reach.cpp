@@ -12,7 +12,7 @@ public:
             q.push(diff);
 
             if(bricks < 0){
-                cout << "pop " << q.top() << endl;
+                // cout << "pop " << q.top() << endl;
                 bricks += q.top();
                 q.pop();
                 ladders--;
