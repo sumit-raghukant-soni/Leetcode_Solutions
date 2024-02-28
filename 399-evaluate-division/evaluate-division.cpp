@@ -1,58 +1,39 @@
 class Solution {
 public:
-    void solve(string src, string target, unordered_map<string, vector<pair<string, double> > >& adj, 
-    unordered_map<string, int>& vis, double& cost, bool& flg){
-        if(flg) return;
-        vis[src]++;
-        for(auto i : adj[src]){
-            cost *= i.second;
-            if(!flg && !vis[i.first] && i.first == target) {
-                // cout << "completed " << i.first << " " << cost << endl;
-                flg = true;
-                return;
-            }
-            if(!flg && !vis[i.first]) {
-                // cout << src << " to " << i.first << " " << cost << endl;
-                solve(i.first, target, adj, vis, cost, flg);
-            }
-            if(!flg) cost /= i.second;
+    void solve(unordered_map<string, vector<pair<string, double>>>& adjList, unordered_map<string, bool>& mp, bool& flg, string src, string dst, double& val, double& a){
+        if(mp.find(src) != mp.end() || flg) return;
+        if(src == dst) { flg = true; a = val; return;}
+
+        mp[src] = true;
+        for(int i=0; i<adjList[src].size(); i++){
+            val *= adjList[src][i].second;
+            solve(adjList, mp, flg, adjList[src][i].first, dst, val, a);
+            if(!flg) val /= adjList[src][i].second;
             else break;
         }
     }
     vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
-        if(queries.size() == 0 || equations.size() == 0) return {};
-
         vector<double> ans;
-        unordered_map<string, vector<pair<string, double> > > adj;
-        unordered_map<string, int> vis;
-        set<string> nodes;
+        unordered_map<string, bool> mp;
+        unordered_map<string, vector<pair<string, double>>> adjList;
         int sz = equations.size();
+
         for(int i=0; i<sz; i++){
-            string s = equations[i][0], e = equations[i][1];
-            adj[s].push_back({e, values[i]});
-            adj[e].push_back({s, 1/values[i]});
-            nodes.insert(s);
-            nodes.insert(e);
+            adjList[equations[i][0]].push_back({equations[i][1], values[i]});
+            adjList[equations[i][1]].push_back({equations[i][0], 1.0/values[i]});
+            mp[equations[i][1]] = mp[equations[i][0]] = true;
         }
 
         sz = queries.size();
-        bool flg;
         for(int i=0; i<sz; i++){
-            // cout << "first" << queries[i][0] << " "  << queries[i][1] << endl;
-            if(nodes.find(queries[i][0]) == nodes.end() || nodes.find(queries[i][1]) == nodes.end()){
-                ans.push_back(-1);
-            }
-            else if(queries[i][0] == queries[i][1]) ans.push_back(1);
+            if(mp.find(queries[i][0]) == mp.end() || mp.find(queries[i][1]) == mp.end()) ans.push_back(-1.0);
             else{
-                vis.clear();
-                flg = false;
-                double cost = 1; 
-                solve(queries[i][0], queries[i][1], adj, vis, cost, flg);
-                if(flg) ans.push_back(cost);
-                else ans.push_back(-1);
-                // cout << cost << " ";
-            }
-            // cout << "last" << endl;
+                unordered_map<string, bool> mp2;
+                double tmp = 1.0, a = -1.0;
+                bool flg = false;
+                solve(adjList, mp2, flg, queries[i][0], queries[i][1], tmp, a);
+                ans.push_back(a);
+            } 
         }
 
         return ans;
