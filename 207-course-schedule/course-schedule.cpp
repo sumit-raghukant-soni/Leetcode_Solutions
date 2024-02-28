@@ -21,7 +21,7 @@ public:
         while(!q.empty()){
             int front = q.front();
             q.pop();
-            cout << front << " ";
+            // cout << front << " ";
             topo.push_back(front);
             for(auto i : mp[front]){
                 indegree[i]--;
