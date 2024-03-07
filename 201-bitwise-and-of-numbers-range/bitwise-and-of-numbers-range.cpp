@@ -9,8 +9,6 @@ public:
             right >>=1;
         }
 
-        while(cnt--) left <<= 1;
-        
-        return left;
+        return left << cnt;
     }
 };
