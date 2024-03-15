@@ -20,9 +20,7 @@ public:
                 else{
                     ans[i][j] = ans[i-1][j] + ans[i][j-1];
                 }
-                cout << ans[i][j] << " ";
             }
-            cout << endl;
         }
 
         return ans[row-1][col-1];
