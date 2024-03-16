@@ -1,19 +1,21 @@
 class Solution {
 public:
     int findMaxLength(vector<int>& nums) {
-        unordered_map<int, int> mp;
         int sz = nums.size();
-        int sum = 0, ans = 0;
+        int CurrentSum = 0, ans = 0;
+        unordered_map<int, int> previousMismatch;
+        
         for(int i=0; i<sz; i++){
-            sum += nums[i] == 0 ? -1 : 1;
-            if(sum == 0) ans = i+1;
+            CurrentSum += nums[i] ? 1 : -1;
+            if(CurrentSum == 0) ans = i+1;
             else{
-                if(mp.find(sum) != mp.end()){
-                    ans = max(ans, i - mp[sum]);
+                if(previousMismatch.find(CurrentSum) != previousMismatch.end()){
+                    ans= max(ans, i-previousMismatch[CurrentSum]);
                 }
-                else mp[sum] = i;
+                else previousMismatch[CurrentSum] = i;
             }
         }
+
         return ans;
     }
 };
