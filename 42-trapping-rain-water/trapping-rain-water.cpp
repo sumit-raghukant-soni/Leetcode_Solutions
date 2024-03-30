@@ -1,26 +1,27 @@
 class Solution {
 public:
     int trap(vector<int>& height) {
-        int cnt = 0, sz = height.size();
-        vector<int> capacity(sz, 0);
-
-        int tmp = 0;
+        int sz = height.size();
+        int ans = 0;
+        vector<int> pre(sz, 0), suf(sz, 0);
+        
         for(int i=0; i<sz; i++){
-            capacity[i] = tmp;
-            tmp = max(tmp, height[i]);
-        }
-        tmp = 0;
-        for(int i=sz-1; i>=0; i--){
-            capacity[i] = min(tmp, capacity[i]);
-            tmp = max(tmp, height[i]);
-        }
-
-        for(int i=0; i<sz; i++){
-            if(capacity[i] > height[i]){
-                cnt += capacity[i] - height[i];
+            if(i-1 >= 0){
+                pre[i] = max(pre[i-1], height[i-1]);
+                suf[sz-1-i] = max(suf[sz-i], height[sz-1-i]);
+            }
+            else{
+                pre[i] = height[i];
+                suf[sz-1-i] = height[sz-1-i];
             }
         }
 
-        return cnt;
+        for(int i=1; i<sz-1; i++){
+            if(min(pre[i], suf[i]) > height[i]){
+                ans += min(pre[i], suf[i]) - height[i];
+            }
+        }
+
+        return ans;
     }
 };
