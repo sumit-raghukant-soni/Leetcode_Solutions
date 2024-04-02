@@ -1,18 +1,16 @@
 class Solution {
 public:
     bool isIsomorphic(string s, string t) {
+        unordered_map<char, char> mp1, mp2;
         int sz = s.length();
-        unordered_map<int, int> a, b;
 
         for(int i=0; i<sz; i++){
-            if(a.find(s[i] - 'a') != a.end() || b.find(t[i] - 'a') != b.end()){
-                if(a[s[i] - 'a'] != t[i] - 'a') return false;
-                if(b[t[i] - 'a'] != s[i] - 'a') return false;   
-            }
-            else{
-                a[s[i] - 'a'] = t[i] - 'a';
-                b[t[i] - 'a'] = s[i] - 'a';
-            }
+            mp1[s[i]] = t[i];
+            mp2[t[i]] = s[i];
+        }
+
+        for(int i=0; i<sz; i++){
+            if(s[i] != mp2[t[i]] || t[i] != mp1[s[i]]) return false;
         }
 
         return true;
