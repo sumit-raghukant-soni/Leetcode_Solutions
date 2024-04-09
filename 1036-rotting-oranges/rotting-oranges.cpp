@@ -1,36 +1,44 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        int dr[] = {0, 1, 0, -1}, dc[] = {1, 0, -1, 0};
-        int ans = 0, r = grid.size(), c = grid[0].size();
-        vector<vector<bool>> vis(r, vector<bool>(c, false));
-        queue<tuple<int, int, int>> q;
-        for(int i=0; i<r; i++){
-            for(int j=0; j<c; j++){
-                if(grid[i][j] == 2){ 
-                    q.push({i, j, 0});
-                    vis[i][j] = true;
+        int ans = 0;
+        int row = grid.size(), col = grid[0].size();
+        queue<pair<int, pair<int, int>>> q;
+        vector<vector<int>> vis(row, vector<int>(col, 0));
+
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
+                if(grid[i][j] == 2){
+                    vis[i][j] = 1;
+                    q.push({0, {i, j}});
                 }
             }
         }
 
         while(!q.empty()){
-            auto [cR, cC, dis] = q.front();
+            int i = q.front().second.first, j = q.front().second.second;
+            int time = q.front().first;
             q.pop();
-            ans = max(ans, dis);
-
-            for(int i=0; i<4; i++){
-                int nR = cR + dr[i], nC = cC + dc[i];
-                if(nR >= 0 && nR < r && nC >= 0 && nC < c && !vis[nR][nC] && grid[nR][nC] == 1){
-                    q.push({nR, nC, dis+1});
-                    vis[nR][nC] = true;
+            if(i == j && i == 100){
+                if(q.empty()) break;
+                i = q.front().second.first, j = q.front().second.second;
+                time = q.front().first;
+            }
+            ans = max(ans, time);
+            int dr[4] = {0, 1, 0, -1}, dc[4] = {1, 0, -1, 0};
+            for(int k=0; k<4; k++){
+                int r = dr[k] + i, c = dc[k] + j;
+                if(r < row && r >= 0 && c < col && c >= 0 && !vis[r][c] && grid[r][c] == 1){
+                    grid[r][c] = 2;
+                    q.push({time+1, {r, c}});
+                    vis[r][c] = 1;
                 }
             }
         }
 
-        for(int i=0; i<r; i++){
-            for(int j=0; j<c; j++){
-                if(grid[i][j] == 1 && !vis[i][j]) return -1;
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
+                if(grid[i][j] == 1) return -1;       
             }
         }
 
