@@ -1,71 +1,82 @@
-class Node{
-    public:
-    int key, val;
-    Node *prev, *next;
-    Node(int k, int v){
-        key = k, val = v;
-        prev = next = NULL;
-    }
-};
 class LRUCache {
 public:
+    class Node{
+        public:
+        int key, val;
+        Node *prev, *next;
+        Node(int k, int v){
+            key = k;
+            val = v;
+            prev = next = NULL;
+        }
+    };
+    Node *head = new Node(-1, -1), *tail = new Node(-1, -1);
+    int sz, occupied;
     unordered_map<int, Node*> mp;
-    Node *head, *tail;
-    int sz, cap;
     LRUCache(int capacity) {
-        head = new Node(-1, -1);
-        tail = head;
-        sz = 0;
-        cap = capacity;
-        // cout << "New " << cap << endl;
+        occupied = 0;
+        sz = capacity;
+        head->next = tail;
+        tail->prev = head;
+    }
+    
+    int get(int key) {
+        // print();
+        if(mp.find(key) == mp.end()) return -1;
+        Node* tmp = mp[key];
+        int value = tmp->val;
+        deleteNode(tmp);
+        addNode(key, value);
+        return value;
+    }
+    
+    void put(int key, int value) {
+        // print();
+        if(mp.find(key) != mp.end()){
+            Node* del = mp[key]; 
+            mp.erase(del->key);
+            deleteNode(del);
+            occupied--;
+        }
+        if(occupied == sz){
+            Node* tmp = tail->prev;
+            mp.erase(tmp->key);
+            deleteNode(tmp);
+            occupied--;
+        }
+        occupied++;
+        addNode(key, value);
+    }
+
+    void deleteNode(Node* tmp){
+        tmp->prev->next = tmp->next;
+        tmp->next->prev = tmp->prev;
+        mp.erase(tmp->key);
+        delete tmp;
+    }
+
+    void addNode(int key, int value){
+        Node* tmp = new Node(key, value);
+        tmp->next = head->next;
+        head->next->prev = tmp;
+        head->next = tmp;
+        tmp->prev = head;
+        mp[key] = tmp;
     }
 
     void print(){
-        Node* curr = head;
-        cout << sz << endl;
+        Node *curr = head;
         while(curr){
-            cout << curr->key << " ";
+            cout << curr->key << ":" << curr->val << " ";
             curr = curr->next;
         }
         cout << endl;
     }
-    
-    int get(int key) {
-        // cout << "get " << key << endl;
-        if(mp.find(key) == mp.end()) return -1;
-
-        if(tail->key != key){
-            // cout << "prev key " << mp[key]->prev->key << endl;
-            if(mp[key]->prev) mp[key]->prev->next = mp[key]->next;
-            if(mp[key]->next) mp[key]->next->prev = mp[key]->prev;
-            tail->next = mp[key];
-            mp[key]->prev = tail;
-            mp[key]->next = NULL;
-            tail = tail->next;
-        }
-        // print();
-        return tail->val;
-    }
-    
-    void put(int key, int value) {
-        // cout << "put " << key << endl;
-        if(mp.find(key) != mp.end()){
-            mp[key]->val = value;
-            get(key);
-            return;
-        }
-        if(sz == cap){
-            mp.erase(head->next->key);
-            head->next = head->next->next;
-            if(head->next) head->next->prev = head;
-            else tail = head;
-        }
-        else sz++;
-
-        tail->next = new Node(key, value);
-        tail->next->prev = tail;
-        tail = tail->next;
-        mp[key] = tail;
-        // print();
-    }
 };
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
