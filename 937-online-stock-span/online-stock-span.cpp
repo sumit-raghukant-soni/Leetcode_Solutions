@@ -1,18 +1,19 @@
 class StockSpanner {
 public:
-    vector<int> v;
-    int size;
+    vector<int> ans;
     StockSpanner() {
-        size = 0;
     }
+    
     int next(int price) {
-        int cnt = 0;
-        v.push_back(price);
-        size++;
-        for(int i=size-1; i>=0; i--){
-            if(v[i] > price) break;
-            else cnt++;
-        }
-        return cnt;
+        ans.push_back(price);
+        int val = 0, sz = ans.size();
+        for(int i=sz-1; i>=0 && ans[i] <= price; i--){ val++; }
+        return val;
     }
 };
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner* obj = new StockSpanner();
+ * int param_1 = obj->next(price);
+ */
