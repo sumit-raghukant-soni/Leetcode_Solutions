@@ -1,21 +1,36 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
 class Solution {
 public:
-    bool solve(TreeNode* root, TreeNode* p, TreeNode* q, TreeNode* &ans){
-        if(!root || ans) return false;
-        
-        bool left = solve(root->left, p, q, ans);
-        bool right = solve(root->right, p, q, ans);
-        bool r = (root == p) || (root == q);
-        // cout << root->val << " " << (left ? "left" : "No") << (r ? "root" : "No") << (right ? "right" : "No") << endl;
-        if((left && right) || (left && r) || (right && r)) ans = root;
+    TreeNode* solve(TreeNode* root, TreeNode* p, TreeNode* q, TreeNode* &ans){
+        if(!root || ans) return NULL;
 
-        return root == p || root == q || left || right;
+        TreeNode *left = solve(root->left, p, q, ans), *right = solve(root->right, p, q, ans);
+        if(root->val == p->val){
+            if(left == q || right == q) ans = root;
+            return p;
+        } 
+        if(root->val == q->val){
+            if(left == p || right == p) ans = root;
+            return q;
+        } 
+
+        if(left && right) ans = root;
+
+        return !right ? left : right;
     }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         TreeNode* ans = NULL;
 
         solve(root, p, q, ans);
 
-        return ans;        
+        return ans;
     }
 };
