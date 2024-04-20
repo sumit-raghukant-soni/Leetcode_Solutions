@@ -1,15 +1,16 @@
 class Solution {
 public:
-    int solve(TreeNode* root, int& ans){
-        if(!root) return 0;
-        if(!root->left && !root->right) return 1;
+    int solve(TreeNode* root, int& ans) {
+        if (!root) return 0;
+        if (!root->left && !root->right) return 1;
 
-        int left = solve(root->left, ans);
-        int right = solve(root->right, ans);
+        int left = solve(root->left, ans), right = solve(root->right, ans);
 
-        ans = max(ans, left+right);
+        ans = max(left+right, ans);
 
-        return max(left, right)+1;
+        // cout << root->val << " " << left << " " << right << endl;
+
+        return max(left, right) + 1;
     }
     int diameterOfBinaryTree(TreeNode* root) {
         int ans = 0;
