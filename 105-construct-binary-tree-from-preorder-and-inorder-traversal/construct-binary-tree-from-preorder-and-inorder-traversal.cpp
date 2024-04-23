@@ -1,27 +1,30 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    TreeNode* solve(vector<int>& preorder, vector<int>& inorder, int s, int e, int& ind, int sz){
-        // if(ind < sz) cout << preorder[ind] << s << " " << e << endl;
-        if(ind >= sz || s > e) return NULL;
+    TreeNode* solve(vector<int>& preorder, vector<int>& inorder, int& sz, int& ind, int s, int e){
+        if(ind == sz || s > e) return NULL;
 
-        if(s == e) return new TreeNode(preorder[ind++]);
-
-        TreeNode* tmp = new TreeNode(preorder[ind]);
         int mid = find(inorder.begin(), inorder.end(), preorder[ind]) - inorder.begin();
+        
+        TreeNode* root = new TreeNode(preorder[ind]);
         ind++;
-        tmp->left = solve(preorder, inorder, s, mid-1, ind, sz);
-        tmp->right = solve(preorder, inorder, mid+1, e, ind, sz);
+        root->left = solve(preorder, inorder, sz, ind, s, mid-1);
+        root->right = solve(preorder, inorder, sz, ind, mid+1, e);
 
-        return tmp; 
+        return root;
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        TreeNode* root = new TreeNode(preorder[0]);
-
-        int s = 0, sz = inorder.size(), ind = 1;
-        int mid = find(inorder.begin(), inorder.end(), preorder[0]) - inorder.begin();
-        root->left = solve(preorder, inorder, s, mid-1, ind, sz);
-        root->right = solve(preorder, inorder, mid+1, sz-1, ind, sz);
-
-        return root;        
+        int sz = preorder.size(), ind = 0;
+        return solve(preorder, inorder, sz, ind, 0, sz-1);
     }
 };
