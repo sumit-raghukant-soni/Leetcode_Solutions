@@ -1,17 +1,19 @@
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
-        vector<int>left,mid,right;
-        int pivot = nums[rand()%nums.size()];
-        for(auto x:nums){
-            if(x>pivot) right.push_back(x);
-            else if(x==pivot) mid.push_back(x);
-            else left.push_back(x);
+        int sz = nums.size();
+        int pivot = nums[rand()%sz];
+        vector<int> left, right, mid;
+        for(int i=0; i<sz; i++){
+            if(nums[i] < pivot) left.push_back(nums[i]);
+            else if(nums[i] == pivot) mid.push_back(nums[i]);
+            else right.push_back(nums[i]);
         }
-        if(k<=right.size()) return findKthLargest(right,k);
-        k-=right.size();
-        if(k<=mid.size()) return pivot;
-        k-=mid.size();
-        return findKthLargest(left,k);
+
+        if(k <= right.size()) return findKthLargest(right, k);
+        k -= right.size();
+        if(k <= mid.size()) return pivot;
+        k -= mid.size();
+        return findKthLargest(left, k);
     }
 };
