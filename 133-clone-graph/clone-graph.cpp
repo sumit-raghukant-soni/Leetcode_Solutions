@@ -21,30 +21,24 @@ public:
 
 class Solution {
 public:
-    void solve(Node* node, Node* &root, unordered_map<int, Node*>& mp, unordered_map<int, int>& vis){
-        if(!node || vis[node->val]) return;
-        vis[node->val]++;
-        for(int i=0; i<node->neighbors.size(); i++){
-            if(mp.find(node->neighbors[i]->val) == mp.end()){
-                Node* tmp = new Node(node->neighbors[i]->val);
-                mp[tmp->val] = tmp;
-                root->neighbors.push_back(tmp);
+    Node* createClone(Node* node, unordered_map<Node*, Node*>& mp){
+        if(!node) return NULL;
+
+        Node* root = new Node(node->val);
+        mp[node] = root;
+        
+        for(Node* n : node->neighbors){
+            if(mp.find(n) == mp.end()){
+                root->neighbors.push_back(createClone(n, mp));
             }
             else{
-                root->neighbors.push_back(mp[node->neighbors[i]->val]);
+                root->neighbors.push_back(mp[n]);
             }
-            solve(node->neighbors[i], root->neighbors[i], mp, vis);
         }
+        return root;
     }
     Node* cloneGraph(Node* node) {
-        if(!node) return NULL;
-        Node* root = new Node(node->val);
-        unordered_map<int, Node*> mp;
-        unordered_map<int, int> vis;
-        mp[node->val] = root;
-
-        solve(node, root, mp, vis);
-
-        return root;
+        unordered_map<Node*, Node*> mp;
+        return createClone(node, mp);
     }
 };
