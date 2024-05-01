@@ -1,30 +1,28 @@
 class Solution {
 public:
-    void solve(vector<vector<char>>& grid, int i, int j, int n, int m, vector<vector<int>>& vis){
-        if(i < 0 || i == n || j < 0 || j == m || vis[i][j] != 0 || grid[i][j] != '1') return;
-
-        vis[i][j]++;
-        int dr[4] = {0,-1,0,1}, dc[4] = {-1,0,1,0};
-        int row, col;
-        for(int k=0; k<4; k++){
-            row = i + dr[k], col = j + dc[k];
-            solve(grid, row, col, n, m, vis);
+    void visit(vector<vector<char>>& grid, int& row, int& col, vector<vector<int>>& vis, int r, int c){
+        vis[r][c]++;
+        int dr[] = {0, -1, 0, 1}, dc[] = {-1, 0, 1, 0};
+        for(int i=0; i<4; i++){
+            int rw = r + dr[i], cl = c + dc[i];
+            if(rw < row && rw >= 0 && cl < col && cl >= 0 && grid[rw][cl] == '1' && vis[rw][cl] == 0){
+                visit(grid, row, col, vis, rw, cl);
+            }
         }
-
     }
     int numIslands(vector<vector<char>>& grid) {
-        int n = grid.size(), m = grid[0].size(), cnt = 0;
-        vector<vector<int>> vis(n, vector<int>(m, 0));
-
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
+        int row = grid.size(), col = grid[0].size();
+        int ans = 0;
+        vector<vector<int>> vis(row, vector<int>(col, 0));
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
                 if(grid[i][j] == '1' && vis[i][j] == 0){
-                    solve(grid, i, j, n, m, vis);
-                    cnt++;
+                    visit(grid, row, col, vis, i, j);
+                    ans++;
                 }
             }
         }
 
-        return cnt;
+        return ans;
     }
 };
