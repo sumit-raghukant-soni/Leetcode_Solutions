@@ -18,10 +18,12 @@ public:
         return dp[s] = false;
     }
     bool wordBreak(string s, vector<string>& wordDict) {
-        unordered_map<string, int> words;
+        unordered_map<string, int> mp;
+        for(auto i : wordDict) mp[i] = true;
+        
+        int sz = s.length(), ind = 0;
+        string tmp = "";
 
-        for(string str : wordDict) words[str]++;
-
-        return solve(s, words);
+        return solve(s, mp);
     }
 };
