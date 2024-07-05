@@ -20,21 +20,19 @@ public:
             
             if((prev != -1 && prev < curr->val && curr->next->val < curr->val) || (prev > curr->val && curr->next->val > curr->val)) {
                 criticalPoints.push_back(i);
+                sz++;
+                if(sz > 1){
+                    if(criticalPoints[sz-1]-criticalPoints[sz-2] < minDistance){
+                        minDistance = criticalPoints[sz-1] - criticalPoints[sz-2];
+                    }
+                    maxDistance = criticalPoints[sz-1] - criticalPoints[0];
+                }
             }
 
             i++;
             prev = curr->val;
             curr = curr->next;
         }
-
-        sz = criticalPoints.size();
-        for(int i=0; i<sz-1; i++){
-            if(criticalPoints[i+1]-criticalPoints[i] < minDistance){
-                minDistance = criticalPoints[i+1] - criticalPoints[i];
-            }
-        }
-
-        if(sz > 1) maxDistance = criticalPoints[sz-1] - criticalPoints[0];
 
         return {(minDistance == INT_MAX ? -1 : minDistance), maxDistance};
     }
