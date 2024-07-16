@@ -27,7 +27,7 @@ public:
 
         int ans = 0;
         for(int i=0; i<hsz; i++){
-            cout << dis[i] << " ";
+            // cout << dis[i] << " ";
             ans = max(ans, dis[i]);
         }
 
