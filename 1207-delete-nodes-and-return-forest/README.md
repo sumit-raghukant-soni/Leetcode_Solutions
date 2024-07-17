@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/delete-nodes-and-return-forest">1207. Delete Nodes And Return Forest</a></h2><h3>Medium</h3><hr><p>Given the <code>root</code> of a binary tree, each node in the tree has a distinct value.</p>
+<h2><a href="https://leetcode.com/problems/delete-nodes-and-return-forest">Delete Nodes And Return Forest</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>Given the <code>root</code> of a binary tree, each node in the tree has a distinct value.</p>
 
 <p>After deleting all nodes with a value in <code>to_delete</code>, we are left with a forest (a disjoint union of trees).</p>
 
