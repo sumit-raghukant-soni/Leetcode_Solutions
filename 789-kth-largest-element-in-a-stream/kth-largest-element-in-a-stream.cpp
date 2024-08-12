@@ -4,22 +4,23 @@ public:
     vector<int> nums;
     KthLargest(int k, vector<int>& nums) {
         this->k = k, this->nums = nums;
-        sort(this->nums.begin(), this->nums.end());
+        sort(this->nums.begin(), this->nums.end(), greater<int>());
+        if(nums.size() > k) this->nums = vector<int>(this->nums.begin(), this->nums.begin()+k);
     }
     
     int add(int val) {
         int j = nums.size()-1;
-        nums.push_back(INT_MAX);
-        while(j >= 0 && nums[j] > val){
-            nums[j+1] = nums[j];
+        if(nums.size() < k) nums.push_back(INT_MIN);
+        while(j >= 0 && nums[j] < val){
+            if(j+1 < k) nums[j+1] = nums[j];
             j--;
         }
-        nums[j+1] = val;
+        if(j+1 < nums.size()) nums[j+1] = val;
 
         // for(int i : nums) cout << i << " ";
         // cout << endl;
 
-        return nums[nums.size()-k];
+        return nums[k-1];
     }
 };
 
