@@ -20,19 +20,20 @@ public:
 
 class Solution {
 public:
-    void solve(Node* root, vector<int>& ans){
-        if(!root) return;
-        
-        for(auto i : root->children){
-            solve(i, ans);
-        }
-
-        ans.push_back(root->val);
-    }
     vector<int> postorder(Node* root) {
         vector<int> ans;
+        if(!root) return ans;
 
-        solve(root, ans);
+        stack<Node*> st;
+        st.push(root);
+        while(!st.empty()){
+            Node* front = st.top();
+            st.pop();
+            for(int i=0; i<front->children.size(); i++){
+                st.push(front->children[i]);
+            }
+            ans.insert(ans.begin(), front->val);
+        }
 
         return ans;
     }
