@@ -1,11 +1,10 @@
 class Solution {
 public:
     vector<vector<int>> construct2DArray(vector<int>& original, int m, int n) {
-        int sz = original.size(), k=0;
-
+        int k=0, sz = original.size();
         if(sz != m*n) return {};
 
-        vector<vector<int>> ans(m, vector<int>(n, 0));
+        vector<vector<int>> ans(m, vector<int>(n));
 
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
