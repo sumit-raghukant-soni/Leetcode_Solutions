@@ -1,11 +1,12 @@
 class CustomStack {
 public:
     int sz, top;
-    vector<int> arr;
+    vector<int> arr, lazyLoader;
     CustomStack(int maxSize) {
         sz = maxSize;
         top = -1;
         arr = vector<int>(sz, 0);
+        lazyLoader = vector<int>(sz, 0);
     }
     
     void push(int x) {
@@ -13,19 +14,21 @@ public:
 
         top++;
         arr[top] = x;
+        lazyLoader[top] = 0;
     }
     
     int pop() {
         if(top == -1) return -1;
+        if(top-1 >= 0){
+            lazyLoader[top-1] += lazyLoader[top];
+        }
         top--;
-        return arr[top+1];
+        return arr[top+1] + lazyLoader[top+1];
     }
     
     void increment(int k, int val) {
         if(top == -1) return;
-        transform(arr.begin(), arr.begin()+min(top+1, k), arr.begin(), [val](int i){
-            return i + val;
-        });
+        lazyLoader[min(k-1, top)] += val;
     }
 };
 
