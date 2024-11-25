@@ -6,22 +6,16 @@ class Solution {
             ans = Math.min(ans, steps);
             return;
         }
-        if(mp.containsKey(Arrays.deepToString(board)) && mp.get(Arrays.deepToString(board)) <= steps) return;
+        String tmp = Arrays.deepToString(board);
+        if(mp.containsKey(tmp) && mp.get(tmp) <= steps) return;
 
-        mp.put(Arrays.deepToString(board), steps);
+        mp.put(tmp, steps);
         steps++;
 
         int dr[] = {0, -1, 0, 1}, dc[] = {1, 0, -1, 0};
         for(int i=0; i<4; i++){
             int nr = r + dr[i], nc = c + dc[i];
             if(nr >= 0 && nr < 2 && nc >= 0 && nc < 3){
-                // for(int k=0; k<2; k++){
-                //     for(int j=0; j<3; j++){
-                //         System.out.print(board[k][j]);
-                //     }
-                //     System.out.println();
-                // }
-                // System.out.println(steps);
                 swap(board, r, c, nr, nc);
                 solve(mp, board, nr, nc, steps);
                 swap(board, r, c, nr, nc);
