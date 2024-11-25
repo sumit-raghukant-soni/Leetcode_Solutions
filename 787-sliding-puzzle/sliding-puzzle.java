@@ -1,12 +1,13 @@
 class Solution {
     public int ans;
     public void solve(HashMap<String, Integer> mp, int[][] board, int r, int c, int steps){
-        if(check(board) == true){
+        String tmp = Arrays.deepToString(board);
+        if(tmp.equals("[[1, 2, 3], [4, 5, 0]]")){
             // System.out.println("Here");
             ans = Math.min(ans, steps);
             return;
         }
-        String tmp = Arrays.deepToString(board);
+        // System.out.println(tmp);
         if(mp.containsKey(tmp) && mp.get(tmp) <= steps) return;
 
         mp.put(tmp, steps);
@@ -27,10 +28,6 @@ class Solution {
         int tmp = board[r][c];
         board[r][c] = board[nr][nc];
         board[nr][nc] = tmp;
-    }
-    public boolean check(int[][] board){
-        if(board[0][0] != 1 || board[0][1] != 2 || board[0][2] != 3 || board[1][0] != 4 || board[1][1] != 5) return false;
-        return true;
     }
     public int slidingPuzzle(int[][] board) {
         int r = 0, c = 0;
