@@ -9,7 +9,7 @@ class Solution {
         
         for(int i=1; i<=n; i++){
             if(i > maxSum) break;
-            if(!st.contains(i) && (maxSum-i) >= 0){
+            if(!st.contains(i)){
                 maxSum -= i;
                 cnt++;
             }
