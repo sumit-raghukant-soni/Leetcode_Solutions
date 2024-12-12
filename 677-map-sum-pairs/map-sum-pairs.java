@@ -1,19 +1,28 @@
 class MapSum {
     private HashMap<String, Integer> mp;
+    private HashMap<String, Integer> st;
     public MapSum() {
         mp = new HashMap<>();
+        st = new HashMap<>();
     }
     
     public void insert(String key, int val) {
-        mp.put(key, val);
+        boolean contains = st.containsKey(key);
+        int sz = key.length(), oldVal = st.getOrDefault(key, 0);
+        String tmp = "";
+
+        st.put(key, val);
+
+        for(int i=0; i<sz; i++){
+            tmp += key.charAt(i);
+            if(contains) mp.put(tmp, mp.getOrDefault(tmp, 0) + val - oldVal);
+            else mp.put(tmp, mp.getOrDefault(tmp, 0) + val);
+        }
     }
     
     public int sum(String prefix) {
-        int ans = 0, sz = prefix.length();
-        for(Map.Entry<String, Integer> pair : mp.entrySet()){
-            if(pair.getKey().length() >= sz && pair.getKey().substring(0, sz).equals(prefix)) ans += pair.getValue();
-        }
-        return ans;
+        if(!mp.containsKey(prefix)) return 0;
+        return mp.get(prefix);
     }
 }
 
