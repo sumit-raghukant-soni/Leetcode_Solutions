@@ -21,27 +21,24 @@ public class Codec {
     // Decodes your encoded data to tree.
     int i;
     public TreeNode deserialize(String data) {
-        // System.out.println(data);
         if(data.length() == 0) return null;
         i=0;
-        return solve(data, data.length());
+        return solve(data);
     }
-    private TreeNode solve(String data, int sz){
+    private TreeNode solve(String data){
         if(data.charAt(i) == '#'){
             i+=2;
             return null;
         }
 
         String tmp = "";
-        while(i < sz && data.charAt(i) != ','){
+        while(data.charAt(i) != ','){
             tmp += data.charAt(i++);
         }
         i++;
         TreeNode root = new TreeNode(Integer.parseInt(tmp));
-        // System.out.println(root.val + " left" + i);
-        root.left = solve(data, sz);
-        // System.out.println(root.val + " right" + i);
-        root.right = solve(data, sz);
+        root.left = solve(data);
+        root.right = solve(data);
 
         return root;
     }
