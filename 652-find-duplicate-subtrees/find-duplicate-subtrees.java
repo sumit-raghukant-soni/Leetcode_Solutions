@@ -35,7 +35,8 @@ class Solution {
 
         solve(root.left, mp);
         solve(root.right, mp);
-        mp.put(new TreeNode2(root), mp.getOrDefault(new TreeNode2(root), 0) + 1);
+        TreeNode2 tmp = new TreeNode2(root);
+        mp.put(tmp, mp.getOrDefault(tmp, 0) + 1);
     }
 }
 
