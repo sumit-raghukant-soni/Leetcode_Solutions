@@ -26,38 +26,33 @@ class Solution {
         }
 
         TreeNode root = new TreeNode(Integer.valueOf(tmp));
+        TreeNode curr = null, newNode = null;
         st.push(new Pair(root, 0));
 
         while(i < sz){
-            // for(Pair<TreeNode, Integer> p : st){
-            //     System.out.print(p.getKey().val + " " + p.getValue() + ", ");
-            // }
-            // System.out.println();
             int i2 = i, cnt = 0;
             while(i2 < sz && path.charAt(i2) == '-'){
                 cnt++; i2++;
             }
             while(cnt <= st.peek().getValue()) { st.pop(); }
+            
             tmp = "";
             while(i2 < sz && path.charAt(i2) != '-'){
                 tmp += path.charAt(i2++); 
             }
             if(st.isEmpty()) break;
-            // System.out.println(tmp + " " + st.peek().getKey().val + " with " + cnt);
-            TreeNode curr = st.peek().getKey();
+
+            curr = st.peek().getKey();
+            newNode = new TreeNode(Integer.valueOf(tmp));
             if(curr.left == null){
-                // System.out.println("added on left");
-                curr.left = new TreeNode(Integer.valueOf(tmp));
-                st.push(new Pair(curr.left, cnt));
-                i = i2;
+                curr.left = newNode;
             }
             else{
-                // System.out.println("added on right");
-                curr.right = new TreeNode(Integer.valueOf(tmp));
+                curr.right = newNode;
                 st.pop();
-                st.push(new Pair(curr.right, cnt));
-                i = i2;
             }
+            st.push(new Pair(newNode, cnt));
+            i = i2;
         }
 
         return root;
