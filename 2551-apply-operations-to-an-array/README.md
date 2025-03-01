@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/apply-operations-to-an-array">2551. Apply Operations to an Array</a></h2><h3>Easy</h3><hr><p>You are given a <strong>0-indexed</strong> array <code>nums</code> of size <code>n</code> consisting of <strong>non-negative</strong> integers.</p>
+<h2><a href="https://leetcode.com/problems/apply-operations-to-an-array">Apply Operations to an Array</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>You are given a <strong>0-indexed</strong> array <code>nums</code> of size <code>n</code> consisting of <strong>non-negative</strong> integers.</p>
 
 <p>You need to apply <code>n - 1</code> operations to this array where, in the <code>i<sup>th</sup></code> operation (<strong>0-indexed</strong>), you will apply the following on the <code>i<sup>th</sup></code> element of <code>nums</code>:</p>
 
