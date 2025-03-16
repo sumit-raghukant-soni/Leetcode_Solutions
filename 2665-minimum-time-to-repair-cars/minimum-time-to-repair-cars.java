@@ -4,7 +4,6 @@ class Solution {
 
         while(s <= e){
             long mid = s + (e-s)/2;
-            // System.out.println(s + " " + mid + " " + e);
             if(check(ranks, cars, mid)){
                 ans = Math.min(ans, mid);
                 e = mid-1;
@@ -18,19 +17,15 @@ class Solution {
     }
 
     private boolean check(int[] ranks, int cars, long maxi){
-        // System.out.println("For " + maxi);
         int sz = ranks.length, k = 0, i = 0;
-        long curr;
+        long curr, val;
 
         while(k < cars && i < sz){
             curr = 0;
-            long val = 0;
             while((curr*curr)*ranks[i] <= maxi && curr <= cars){
-                val = curr;
                 curr++;
             }
-            // System.out.println("with " + maxi + " = " + i + " <> " + curr);
-            k += (int) val;
+            if(curr > 0) k += curr-1;
             i++;
         }
 
