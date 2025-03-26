@@ -1,20 +1,17 @@
 class Solution {
     public int minMoves2(int[] nums) {
         int sz = nums.length, ans = Integer.MAX_VALUE;
-        
+        int a, b, aAns = 0, bAns = 0;
+
         Arrays.sort(nums);
 
-        if((sz&1) == 1) return calc(nums, nums[sz/2]);
-        return Math.min(calc(nums, nums[sz/2]), calc(nums, nums[(sz-1)/2]));
-    }
-
-    private int calc(int[] nums, int mid){
-        int sz = nums.length, ans = 0;
+        a = nums[sz/2]; b = nums[(sz-1)/2];
 
         for(int i=0; i<sz; i++){
-            ans += Math.abs(mid - nums[i]);
+            aAns += Math.abs(a - nums[i]);
+            bAns += Math.abs(b - nums[i]);
         }
 
-        return ans;
+        return Math.min(aAns, bAns);
     }
 }
