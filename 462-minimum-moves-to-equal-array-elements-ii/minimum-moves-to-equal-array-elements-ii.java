@@ -8,8 +8,8 @@ class Solution {
         a = nums[sz/2]; b = nums[(sz-1)/2];
 
         for(int i=0; i<sz; i++){
-            aAns += Math.abs(a - nums[i]);
-            bAns += Math.abs(b - nums[i]);
+            aAns += a > nums[i] ? (a - nums[i]) : (nums[i] - a);
+            bAns += b > nums[i] ? (b - nums[i]) : (nums[i] - b);
         }
 
         return Math.min(aAns, bAns);
