@@ -3,15 +3,20 @@ class Solution {
     private Set<List<Integer>> allSub = new HashSet<>();
     public List<List<Integer>> findSubsequences(int[] nums) {
         List<Integer> tmp = new ArrayList<>();
+        int sz = nums.length;
+        Integer[] arr = new Integer[sz];
+        for(int i=0; i<sz; i++){
+            arr[i] = nums[i];
+        }
 
-        solve(nums, tmp, -101, 0);
+        solve(arr, tmp, -101, 0);
 
         ans.addAll(allSub);
         
         return ans;
     }
 
-    private void solve(int[] nums, List<Integer> tmp, int last, int i){
+    private void solve(Integer[] nums, List<Integer> tmp, int last, int i){
         int sz = nums.length;
         if(tmp.size() >= 2){
             List<Integer> t = new ArrayList<>();
@@ -24,7 +29,7 @@ class Solution {
         if(last <= nums[i]){
             tmp.add(nums[i]);
             solve(nums, tmp, nums[i], i+1);
-            tmp.remove(Integer.valueOf(nums[i]));
+            tmp.remove(nums[i]);
         }
     }
 }
