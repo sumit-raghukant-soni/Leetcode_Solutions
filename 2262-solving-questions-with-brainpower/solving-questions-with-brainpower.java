@@ -16,6 +16,9 @@ class Solution {
         if(i >= sz) return 0L;
         if(dp[i] != -1) return dp[i];
 
-        return dp[i] = Math.max(solve(questions, i+1), questions[i][0] + solve(questions, i+1+questions[i][1]));
+        long a = solve(questions, i+1);
+        long b = questions[i][0] + solve(questions, i+1+questions[i][1]);
+
+        return dp[i] = a > b ? a : b;
     }
 }
