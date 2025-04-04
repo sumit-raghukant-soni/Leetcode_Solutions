@@ -33,10 +33,9 @@ class Solution {
         }
 
         int left = solve(root.left, depth + 1), right = solve(root.right, depth + 1);
-        maxDepth = Math.max(maxDepth, Math.max(left, right));
         if(left == right && left == maxDepth) ans = root;
         
-        System.out.println(root.val + " " + left + ":" + right);
+        // System.out.println(root.val + " " + left + ":" + right);
         return Math.max(left, right);
     }
 }
