@@ -30,16 +30,15 @@ class Solution {
 
     private void createTree(int n){
 
-        TreeNode root = new TreeNode(0);
-
         for(int i=1; i<n; i+=2){
             int left = i;
             int right = (n-1)-i;
             for(TreeNode l : mp.get(left) ){
                 for(TreeNode r : mp.get(right) ){
-                    root.left = l;
-                    root.right = r;
-                    mp.get(n).add(clone(root));
+                    TreeNode root = new TreeNode(0);
+                    root.left = clone(l);
+                    root.right = clone(r);
+                    mp.get(n).add(root);
                 }
             }
         }
