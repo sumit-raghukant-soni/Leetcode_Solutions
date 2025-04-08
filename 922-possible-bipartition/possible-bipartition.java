@@ -1,5 +1,6 @@
 class Solution {
     private Map<Integer, List<Integer>> adjList = new HashMap<>();
+    private Queue<Integer> q = new LinkedList<>();
     private int[] vis;
     public boolean possibleBipartition(int n, int[][] dislikes) {
         int sz = dislikes.length;
@@ -21,15 +22,10 @@ class Solution {
             }
         }
 
-        // for(int i=1; i<=n; i++){
-        //     System.out.println(vis[i] + ",");
-        // }
-
         return true;
     }
 
     private boolean solve(int i){
-        Queue<Integer> q = new LinkedList<>();
         q.add(i);
         int val = 1;
         vis[i] = val;
