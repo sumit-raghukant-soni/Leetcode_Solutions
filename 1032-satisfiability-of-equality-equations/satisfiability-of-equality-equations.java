@@ -4,6 +4,7 @@ class Solution {
     private Map<Integer, Integer> group_mpg = new HashMap<>();
     public boolean equationsPossible(String[] equations) {
         int sz = equations.length;
+        List<Pair<Integer, Integer>> ne = new ArrayList<>();
 
         for(int i=0; i<26; i++){
             mp.put(i, new ArrayList<>());
@@ -16,6 +17,9 @@ class Solution {
                 mp.get(u).add(v);
                 mp.get(v).add(u);
             }
+            else{
+                ne.add(new Pair(u, v));
+            }
         }
 
         int k=0;
@@ -23,12 +27,9 @@ class Solution {
             if(vis[i] == 0) dfs(i, k++);
         }
 
-        for(int i=0; i<sz; i++){
-            int u = equations[i].charAt(0) - 'a', v = equations[i].charAt(3) - 'a';
-            int relation = equations[i].charAt(1) == '!' ? 1 : 2;
-            if(relation == 1){
-                if(group_mpg.get(u) == group_mpg.get(v)) return false;
-            }
+        for(Pair<Integer, Integer> p : ne){
+            int u = p.getKey(), v = p.getValue();
+            if(group_mpg.get(u) == group_mpg.get(v)) return false;
         }
 
         return true;
