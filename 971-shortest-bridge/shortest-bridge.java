@@ -20,18 +20,16 @@ class Solution {
             int r = q.peek().getValue().getKey(), c = q.peek().getValue().getValue();
             q.poll();
             // System.out.println(r + ":" + c + " " + val);
-            if(grid[r][c] == 1 && val != 0) ans = Math.min(ans, val);
+            if(grid[r][c] == 1 && val != 0) return val;
             if(vis[r][c] == 1) continue;
             vis[r][c] = 1;
             for(int i=0; i<4; i++){
                 int newr = r + dr[i], newc = c + dc[i];
                 if(newr < n && newc < n && newr >= 0 && newc >= 0 && vis[newr][newc] == 0){
-                    // System.out.println(newr + " " + newc);
                     if(grid[newr][newc] == 0) q.add(new Pair(val + 1, new Pair(newr, newc)));
                     else q.add(new Pair(val, new Pair(newr, newc)));
                 }
             }
-            // System.out.println(q);
         }
 
         return ans == Integer.MAX_VALUE ? 0 : ans;
