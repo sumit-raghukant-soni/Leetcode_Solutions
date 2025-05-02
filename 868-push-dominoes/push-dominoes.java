@@ -1,34 +1,23 @@
 class Solution {
     public String pushDominoes(String dominoes) {
-        int sz = dominoes.length();
+        int sz = dominoes.length(), flg1 = 0, flg2 = 0;
         String ans = "";
-        int arr[] = new int[sz], left[] = new int[sz], right[] = new int[sz];
-        int flg = 0;
+        int left[] = new int[sz], right[] = new int[sz];
 
-        for(int i=0; i<sz; i++){
-            if(dominoes.charAt(i) == 'L') arr[i] = 1;
-            else if(dominoes.charAt(i) == 'R') arr[i] = 2;
-            else arr[i] = 0;
-        }
-        
-        for(int i=0; i<sz; i++){
-            if(arr[i] == 2){
-                flg = 1;
+        for(int i=0, j=sz-1; i<sz; i++, j--){
+            if(dominoes.charAt(i) == 'R'){
+                flg1 = 1;
             }
-            else if(arr[i] != 0) flg = 0;
-            if(flg > 0){
-                if(arr[i] == 0) right[i] = flg++;
+            else if(dominoes.charAt(i) != '.') flg1 = 0;
+            if(dominoes.charAt(j) == 'L'){
+                flg2 = 1;
             }
-        }
-
-        flg = 0;
-        for(int i=sz-1; i>=0; i--){
-            if(arr[i] == 1){
-                flg = 1;
+            else if(dominoes.charAt(j) != '.') flg2 = 0;
+            if(flg1 > 0 && dominoes.charAt(i) == '.'){
+                right[i] = flg1++;
             }
-            else if(arr[i] != 0) flg = 0;
-            if(flg > 0){
-                if(arr[i] == 0) left[i] = flg++;
+            if(flg2 > 0 && dominoes.charAt(j) == '.'){
+                left[j] = flg2++;
             }
         }
 
