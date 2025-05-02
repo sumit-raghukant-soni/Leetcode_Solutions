@@ -1,22 +1,25 @@
 class Solution {
     public String pushDominoes(String dominoes) {
         int sz = dominoes.length(), flg1 = 0, flg2 = 0;
-        String ans = "";
         int left[] = new int[sz], right[] = new int[sz];
+        char ch1, ch2;
+        String ans = "";
 
         for(int i=0, j=sz-1; i<sz; i++, j--){
-            if(dominoes.charAt(i) == 'R'){
+            ch1 = dominoes.charAt(i); 
+            ch2 = dominoes.charAt(j);
+            if(ch1 == 'R'){
                 flg1 = 1;
             }
-            else if(dominoes.charAt(i) != '.') flg1 = 0;
-            if(dominoes.charAt(j) == 'L'){
+            else if(ch1 != '.') flg1 = 0;
+            if(ch2 == 'L'){
                 flg2 = 1;
             }
-            else if(dominoes.charAt(j) != '.') flg2 = 0;
-            if(flg1 > 0 && dominoes.charAt(i) == '.'){
+            else if(ch2 != '.') flg2 = 0;
+            if(flg1 > 0 && ch1 == '.'){
                 right[i] = flg1++;
             }
-            if(flg2 > 0 && dominoes.charAt(j) == '.'){
+            if(flg2 > 0 && ch2 == '.'){
                 left[j] = flg2++;
             }
         }
