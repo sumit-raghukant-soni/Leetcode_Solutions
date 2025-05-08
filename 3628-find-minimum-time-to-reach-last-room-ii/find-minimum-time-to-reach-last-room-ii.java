@@ -3,12 +3,7 @@ class Solution {
         int m = moveTime.length, n = moveTime[0].length;
         int dr[] = {0, 1, 0, -1}, dc[] = {1, 0, -1, 0};
         int vis[][] = new int[m][n];
-        PriorityQueue< Integer[] > pq = new PriorityQueue<>((a, b) -> {
-            if(a[0] == b[0]){
-                return (b[1]+b[2]) - (a[1]+a[2]);
-            }
-            return a[0] - b[0];
-        });
+        PriorityQueue< Integer[] > pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
 
         for(int i=0; i<m; i++){
             Arrays.fill(vis[i], -1);
@@ -18,18 +13,19 @@ class Solution {
         tmp[0] = 0; tmp[1] = 0; tmp[2] = 0;
         pq.add( tmp );
 
+        int totalCost, currCost, i, j, nextCost, newi, newj;
         while(!pq.isEmpty()){
             tmp = pq.poll();
-            int totalCost = Math.abs(tmp[0]), currCost = tmp[0] < 0 ? 2 : 1;
-            int i = tmp[1], j = tmp[2];
-            int nextCost = currCost == 1 ? 2 : 1;
+            totalCost = Math.abs(tmp[0]); currCost = tmp[0] < 0 ? 2 : 1;
+            i = tmp[1]; j = tmp[2];
+            nextCost = currCost == 1 ? 2 : 1;
 
             if(i == m-1 && j == n-1) return totalCost;
             if(vis[i][j] != -1 && vis[i][j] <= totalCost) continue;
             vis[i][j] = totalCost;
 
             for(int k=0; k<4; k++){
-                int newi = dr[k] + i, newj = dc[k] + j;
+                newi = dr[k] + i; newj = dc[k] + j;
                 if(newi < m && newi >= 0 && newj < n && newj >= 0){
                     tmp = new Integer[3];
                     tmp[0] = Math.max(moveTime[newi][newj] + currCost, totalCost + currCost); 
