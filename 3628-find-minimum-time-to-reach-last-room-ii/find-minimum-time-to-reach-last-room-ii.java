@@ -1,7 +1,7 @@
 class Solution {
     public int minTimeToReach(int[][] moveTime) {
         int m = moveTime.length, n = moveTime[0].length;
-        int dr[] = {0, -1, 0, 1}, dc[] = {-1, 0, 1, 0};
+        int dr[] = {0, 1, 0, -1}, dc[] = {1, 0, -1, 0};
         int vis[][] = new int[m][n];
         PriorityQueue< Integer[] > pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
 
