@@ -1,26 +1,25 @@
 class Solution {
     public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
-        int sz1 = difficulty.length, sz2 = worker.length, sum = 0;
-        PriorityQueue<Pair<Integer, Integer>> pq = new PriorityQueue<>((a, b) -> b.getKey() - a.getKey());
+        int sz1 = difficulty.length, sz2 = worker.length, sum = 0, j = 0;
+        List<Pair<Integer, Integer>> pq = new ArrayList<>();
         Arrays.sort(worker);
 
         for(int i=0; i<sz1; i++){
             pq.add(new Pair(profit[i], difficulty[i]));
         }
-        // System.out.println(pq);
+        Collections.sort(pq, (a, b) -> b.getKey() - a.getKey());
 
-        for(int i=sz2-1; i>=0 && !pq.isEmpty(); i--){
-            int p = pq.peek().getKey(), d = pq.peek().getValue();
+        for(int i=sz2-1; i>=0 && j<sz1; i--){
+            int p = pq.get(j).getKey(), d = pq.get(j).getValue();
             while(d > worker[i]){
-                pq.poll();
-                if(pq.isEmpty()){
+                j++;
+                if(j == sz1){
                     p = 0;
                     break;
                 }
-                p = pq.peek().getKey(); 
-                d = pq.peek().getValue();
+                p = pq.get(j).getKey(); 
+                d = pq.get(j).getValue();
             }
-            // System.out.println(worker[i] + " " + d + ":" + p);
             sum += p;
         }
 
