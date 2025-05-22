@@ -11,7 +11,7 @@ class Solution {
                 s = mid + 1;
             }
             else{
-                start = Math.min(mid, start);
+                start = start < mid ? start : mid;
                 e = mid - 1;
             }
         }
@@ -23,7 +23,9 @@ class Solution {
         end = start--;
         for(int i=start, j = end; (i>=0 || j<sz) && k > 0; k--){
             int val1 = i >= 0 ? arr[i] : 10000000, val2 = j < sz ? arr[j] : 10000000;
-            int av1 = Math.abs(val1 - x), av2 = Math.abs(val2 - x);
+            int av1 = val1 - x, av2 = val2 - x;
+            if(av1 < 0) av1 *= -1;
+            if(av2 < 0) av2 *= -1;
             if(av1 <= av2){
                 ans.add(0, val1);
                 i--;
