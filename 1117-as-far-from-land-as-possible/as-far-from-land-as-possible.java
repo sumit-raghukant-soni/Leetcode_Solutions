@@ -19,19 +19,17 @@ class Solution {
 
         while(!q.isEmpty()){
             tmp = q.poll();
-            int i = tmp[0], j = tmp[1], dis = tmp[2];
-            if(vis[i][j] != 0) continue;
-            // System.out.println(i + ":" + j + " = " + dis);
-            ans = ans > dis ? ans : dis;
-            vis[i][j] = dis;
+            int i = tmp[0], j = tmp[1], dis = tmp[2] + 1;
             
             for(int k=0; k<4; k++){
                 int newi = i + dr[k], newj = j + dc[k];
                 if(newi < n && newj < n && newi >= 0 && newj >= 0 && grid[newi][newj] == 0 && vis[newi][newj] == 0){
+                    vis[newi][newj] = dis;
+                    ans = ans > dis ? ans : dis;
                     tmp = new Integer[3];
                     tmp[0] = newi;
                     tmp[1] = newj;
-                    tmp[2] = dis+1;
+                    tmp[2] = dis;
                     q.add(tmp);
                 }
             }
