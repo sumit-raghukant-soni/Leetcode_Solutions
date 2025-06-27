@@ -9,38 +9,28 @@
  * }
  */
 class Solution {
-    int sz = 0, val1, val2, up = 0, down = 0;
+    int sz = 0, up = 0, down = 0;
+    ListNode first = null, second = null;
     public ListNode swapNodes(ListNode head, int k) {
-        sz = calcSize(head);
         solve(head, k);
 
-        return head;
-    }
+        int tmp = first.val;
+        first.val = second.val;
+        second.val = tmp;
 
-    private int calcSize(ListNode head){
-        if(head == null) return 0;
-        return 1 + calcSize(head.next);
+        return head;
     }
 
     private void solve(ListNode head, int k){
         if(head == null) return;
 
-        if(up == k-1){
-            val1 = head.val;
-        }
-        if(sz-k == up){
-            val2 = head.val;
-        }
+        if(up == k-1) first = head;
+        
+        sz++;
         up++;
         solve(head.next, k);
         down++;
-        if(down == k){
-            // val2 = head.val;
-            head.val = val1;
-        }
-        if(sz - (k-1) == down){
-            head.val = val2;
-        }
-        // System.out.println(val1 + " " + val2);
+        
+        if(k == down) second = head;
     }
 }
