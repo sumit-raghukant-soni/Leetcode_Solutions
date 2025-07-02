@@ -38,13 +38,13 @@ class Solution {
         if(flg){
             return;
         }
-        System.out.println(root.val + " " + voyage[i]);
+        // System.out.println(root.val + " " + voyage[i]);
 
         i++;
         int tmp = i;
         if(root.left != null){
             if(root.left.val == voyage[i]){
-                System.out.println("Normal");
+                // System.out.println("Normal");
                 solve(root.left, voyage);
                 // if(i == n) return;
                 if(root.right != null && root.right.val == voyage[i]) solve(root.right, voyage);
@@ -52,7 +52,7 @@ class Solution {
             }
             else if(root.right != null){
                 if(root.right.val == voyage[i]){
-                    System.out.println("Change");
+                    // System.out.println("Change");
                     ans.add(root.val);
                     solve(root.right, voyage);
                     // if(i == n) return;
@@ -65,12 +65,12 @@ class Solution {
         }
         else if(root.right != null){
             if(root.right.val == voyage[i]){
-                System.out.println("Normal");
+                // System.out.println("Normal");
                 solve(root.right, voyage);
             }
             else flg = true;
         }
 
-        System.out.println("Out");
+        // System.out.println("Out");
     }
 }
