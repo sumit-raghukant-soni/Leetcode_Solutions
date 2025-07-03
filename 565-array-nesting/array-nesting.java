@@ -8,9 +8,9 @@ class Solution {
         for(int i=0; i<sz; i++){
             if(vis[i] == -1){
                 solve(nums, i);
+                ans = ans > vis[i] ? ans : vis[i];
             }
             // System.out.print(vis[i] + ",");
-            ans = ans > vis[i] ? ans : vis[i];
         }
 
         return ans;
