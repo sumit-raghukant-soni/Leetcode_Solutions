@@ -21,16 +21,13 @@ class Solution {
         return ans;
     }
 
-    private Pair<Integer, Integer> solve(TreeNode root){
-        if(root == null) return new Pair(0, 0);
+    private int[] solve(TreeNode root){
+        int[] response = {0, 0};
+        if(root == null) return response;
         
-        Pair<Integer, Integer> left = solve(root.left), right = solve(root.right);
-        int carry = 0, penalty = 0;
-        
-        carry += left.getKey();
-        carry += right.getKey();
-        penalty += left.getValue();
-        penalty += right.getValue();
+        int[] left = solve(root.left), right = solve(root.right);
+        int carry = left[0] + right[0];
+        int penalty = left[1] + right[1];
 
         if(root.val >= 1) carry += root.val - 1;
         else penalty += 1;
@@ -46,7 +43,9 @@ class Solution {
             }
         }
 
-        ans += carry + penalty;        
-        return new Pair(carry, penalty);
+        ans += carry + penalty;   
+        response[0] = carry;
+        response[1] = penalty;     
+        return response;
     }
 }
