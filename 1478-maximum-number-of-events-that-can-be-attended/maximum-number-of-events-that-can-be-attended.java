@@ -3,10 +3,7 @@ class Solution {
         int sz = events.length, cnt = 0;
         int vis[] = new int[100001];
 
-        Arrays.sort(events, (a, b) -> {
-            if(a[1] == b[1]) return b[0] - a[0];
-            return b[0] - a[0];
-        });
+        Arrays.sort(events, (a, b) -> b[0] - a[0] );
 
         for(int i=0; i<sz; i++){
             int u = events[i][0], v = events[i][1];
