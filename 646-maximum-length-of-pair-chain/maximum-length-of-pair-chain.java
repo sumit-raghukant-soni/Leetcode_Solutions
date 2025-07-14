@@ -11,11 +11,12 @@ class Solution {
         });
 
         for(int i=sz-1; i>=0; i--){
-            int cnt = 0;
             for(int j=i+1; j<sz; j++){
-                if(pairs[j][0] > pairs[i][1]) dp[i] = Math.max(dp[j] + 1, dp[i]);
+                if(pairs[j][0] > pairs[i][1]){
+                    dp[i] = (dp[j] + 1) > dp[i] ? (dp[j] + 1) : dp[i];
+                }
             }
-            ans = Math.max(dp[i], ans);
+            ans = dp[i] > ans ? dp[i] : ans;
         }
 
         return ans;
