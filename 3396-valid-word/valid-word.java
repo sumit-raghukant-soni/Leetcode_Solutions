@@ -2,15 +2,13 @@ class Solution {
     public boolean isValid(String word) {
         int sz = word.length();
         boolean vowel = false, consonant = false, special = false;
-        List<Character> v = Arrays.asList(new Character[] {'a','e','i','o','u','A','E','I','O','U'}), 
-        d = Arrays.asList(new Character[] {'0','1','2','3','4','5','6','7','8','9'}), 
-        s = Arrays.asList(new Character[] {'@','#','$'});
+        List<Character> v = Arrays.asList(new Character[] {'a','e','i','o','u','A','E','I','O','U'});
         if(sz < 3) return false;
         
         for(int i=0; i<sz; i++){
-            if(d.contains(word.charAt(i))) continue;
+            if(word.charAt(i) >= '0' && word.charAt(i) <= '9') continue;
+            else if(word.charAt(i) == '@' || word.charAt(i) == '#' || word.charAt(i) == '$') special = true;
             else if(v.contains(word.charAt(i))) vowel = true;
-            else if(s.contains(word.charAt(i))) special = true;
             else consonant = true;
         }
 
