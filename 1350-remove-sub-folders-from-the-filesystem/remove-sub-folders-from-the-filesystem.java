@@ -1,25 +1,37 @@
 class Solution {
     public List<String> removeSubfolders(String[] folder) {
-        Arrays.sort(folder);
+        int sz = folder.length;
+        boolean flg = true;
+        Map<String, Integer> mp = new HashMap<>();
         List<String> ans = new ArrayList<>();
-        HashMap<String, Integer> mp = new HashMap<>();
-        int flg;
 
         for(String str : folder){
+            mp.put(str, mp.getOrDefault(str, 0) + 1);
+        }   
+        // System.out.println(mp);
+
+        for(String str : folder){
+            List<String> folders = new ArrayList<>();
             String tmp = "";
-            flg = 1;
-            for(int i=0; i<str.length(); i++){
-                tmp += str.charAt(i);
-                if(mp.containsKey(tmp) && ((i+1 < str.length() && str.charAt(i+1) == '/') || i == str.length()-1)){
-                    flg = 0;
+            for(char ch : str.toCharArray()){
+                if(ch == '/' && tmp.length() > 1){
+                    folders.add(tmp);
+                    tmp = "";
+                }
+                tmp += ch;
+            }
+            // System.out.println(folders);
+            tmp = "";
+            flg = true;
+            for(String f : folders){
+                tmp += f;
+                if(mp.containsKey(tmp)){
+                    flg = false;
+                    mp.remove(str);
                     break;
                 }
             }
-            if(flg == 1) mp.put(tmp, 1);
-        }
-
-        for(Map.Entry<String, Integer> pair : mp.entrySet()){
-            ans.add(pair.getKey());
+            if(flg) ans.add(str);
         }
 
         return ans;
