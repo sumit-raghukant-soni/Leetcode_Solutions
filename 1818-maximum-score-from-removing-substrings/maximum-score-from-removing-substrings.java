@@ -13,17 +13,12 @@ class Solution {
             f = x; s = y;
         }
 
-        // System.out.println(a + " " + b);
-        // System.out.println(f + " " + s);
         for(int i=0; i<sz; i++){
-            // System.out.println(i);
             if(!st.isEmpty() && st.peek() == a && str.charAt(i) == b){
-                // System.out.println("Here");
                 ans += f;
                 st.pop();
             }
             else if(f == s && !st.isEmpty() && st.peek() == b && str.charAt(i) == a){
-                // System.out.println("Here");
                 ans += f;
                 st.pop();
             }
@@ -32,11 +27,13 @@ class Solution {
 
         // System.out.println(st + " " + ans);
         String str2 = "";
+        StringBuilder tmp = new StringBuilder();
         sz = st.size();
         while(!st.isEmpty()){
-            str2 = st.pop() + str2;
+            tmp.insert(0, st.pop());
         }
-        // System.out.println(str2);
+        str2 = tmp.toString();
+        
         for(int i=0; i<sz; i++){
             if(!st.isEmpty() && st.peek() == a && str2.charAt(i) == b){
                 ans += f;
