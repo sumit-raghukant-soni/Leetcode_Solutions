@@ -15,35 +15,45 @@
  */
 class Solution {
     public TreeNode sufficientSubset(TreeNode root, int limit) {
-        return solve(root, limit, 0).getKey();
+        return (TreeNode) solve(root, limit, 0)[0];
     }
 
-    private Pair<TreeNode, Boolean> solve(TreeNode root, int limit, int sum){
+    private Object[] solve(TreeNode root, int limit, int sum){
         sum += root.val;
+        Object[] tmp = new Object[2];
         if(root.left == null && root.right == null){
-            if(limit <= sum) return new Pair(root, limit <= sum);
-            return new Pair(null, false);
+            if(limit <= sum){
+                tmp[0] = root;
+                tmp[1] = limit <= sum;
+            }
+            else{
+                tmp[0] = null;
+                tmp[1] = false;
+            }
+            return tmp;
         } 
 
         boolean flg = false;
-        Pair<TreeNode, Boolean> a;
+        Object[] a = null;
         if(root.left != null){
             a = solve(root.left, limit, sum);
-            root.left = a.getKey();
-            flg = flg | a.getValue();
+            root.left = (TreeNode) a[0];
+            flg = flg | (boolean) a[1];
         }
         if(root.right != null){
             a = solve(root.right, limit, sum);
-            root.right = a.getKey();
-            flg = flg | a.getValue();
+            root.right = (TreeNode) a[0];
+            flg = flg | (boolean) a[1];
         }
 
-        // System.out.println("Here " + root.val + " and sum is " + sum + " " + flg);
-        // if(flg){
-            // System.out.println("Not Deleted");
-            // return ;
-        // }
-
-        return flg ? new Pair(root, true) : new Pair(null, false);
+        if(flg){
+            tmp[0] = root;
+            tmp[1] = true;
+        }
+        else{
+            tmp[0] = null;
+            tmp[1] = false;
+        }
+        return tmp;
     }
 }
