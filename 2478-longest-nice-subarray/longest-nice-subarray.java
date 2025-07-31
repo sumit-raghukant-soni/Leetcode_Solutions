@@ -1,25 +1,22 @@
 class Solution {
-    public int longestNiceSubarray(int[] nums) {
-        int sz = nums.length, ans = 1, cnt = 0, j = 0;
-        long sum = 0;
 
-        for(int i=0; i<sz; i++){
-            if((sum&nums[i]) == 0){
-                sum = sum | nums[i];
-            }
-            else{
-                while(j <= i && (sum & nums[i]) != 0){
-                    sum = (sum ^ nums[j++]);
-                    cnt--;
+    public int longestNiceSubarray(int[] nums) {
+        int maxLength = 1; 
+
+        for (int start = 0; start < nums.length - maxLength; start++) {
+            int currentLength = 1; 
+            int usedBits = nums[start]; 
+
+            for (int end = start + 1; end < nums.length; end++) {
+                if ((usedBits & nums[end]) == 0) {
+                    usedBits |= nums[end];
+                    currentLength++;
                 }
-                sum = sum | nums[i];
+                else break;
             }
-            cnt++;
-            ans = Math.max(ans, cnt);
-            // System.out.println(nums[i] + " " + Integer.toBinaryString((int) nums[i]));
-            // System.out.println(Integer.toBinaryString((int) sum) + " " + sum + " " + cnt);
+            maxLength = Math.max(maxLength, currentLength);
         }
 
-        return ans;
+        return maxLength;
     }
 }
