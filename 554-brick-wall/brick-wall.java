@@ -12,11 +12,12 @@ class Solution {
             }
         }
 
-        // System.out.println(cnt);
-
         for(Map.Entry<Long, Integer> e : cnt.entrySet()){
             long i = e.getValue(), j = e.getKey();
-            if(j > 0 && j < sum) ans = (int) Math.min(ans, m - i);
+            if(j > 0 && j < sum){
+                int diff = (int) (m - i);
+                ans = ans < diff ? ans : diff;
+            }
         }
 
         return ans;    
