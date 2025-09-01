@@ -1,31 +1,33 @@
 class Solution {
-    public double maxAverageRatio(int[][] classes, int extraStudents) {
+    public double maxAverageRatio(int[][] classes, int es) {
         int sz = classes.length;
-        Double tp = 0.0, avg, preAvg;
-        PriorityQueue<Pair<Double, Integer>> pq = new PriorityQueue<>((a, b) -> 
-            b.getKey().compareTo(a.getKey())
-        );
+        double ans = 0;
+        Double tmp[];
+        PriorityQueue<Double[]> pq = new PriorityQueue<>((a, b) -> Double.compare(b[2], a[2]) );
 
         for(int i=0; i<sz; i++){
-            avg = (1.0*classes[i][0]+1) / (classes[i][1]+1); 
-            preAvg = 1.0*classes[i][0] / classes[i][1];
-            pq.offer(new Pair(avg - preAvg, i));
+            if(classes[i][0] != classes[i][1]){
+                tmp = new Double[3];
+                tmp[0] = (double) classes[i][0];
+                tmp[1] = (double) classes[i][1];
+                tmp[2] = ((tmp[0]+1)/ (tmp[1]+1)) - (tmp[0]/ tmp[1]);
+                pq.add(tmp);
+            }
+            ans += (1.0 * classes[i][0]) / classes[i][1];
         }
 
-        while(!pq.isEmpty() && extraStudents > 0){
-            Pair<Double, Integer> curr = pq.poll();
-            classes[curr.getValue()][0]++;
-            classes[curr.getValue()][1]++;
-            extraStudents--;
-            avg = (1.0*classes[curr.getValue()][0]+1) / (classes[curr.getValue()][1]+1);
-            preAvg = 1.0*classes[curr.getValue()][0] / classes[curr.getValue()][1];
-            pq.offer(new Pair(avg - preAvg, curr.getValue()));
+        // System.out.println(ans);
+
+        while(es-- > 0 && !pq.isEmpty()){
+            tmp = pq.poll();
+            // System.out.println(tmp[0] + " " + tmp[1]);
+            ans += tmp[2];
+            tmp[0]++;
+            tmp[1]++;
+            tmp[2] = ((tmp[0]+1)/ (tmp[1]+1)) - (tmp[0]/ tmp[1]);
+            pq.add(tmp);
         }
 
-        for(int i=0; i<sz; i++){
-            tp += (double) classes[i][0] / classes[i][1];
-        }
-
-        return tp/sz;
+        return ans/sz;
     }
 }
