@@ -25,9 +25,6 @@ class Solution {
                 }
             }
             if(!flg){
-                // System.out.println("from " + mp.get(friendships[i][0]));
-                // System.out.println("to " + mp.get(friendships[i][1]));
-                // System.out.println(friendships[i][0] + ":" + friendships[i][1]);
                 lst.add(friendships[i][0]);
                 lst.add(friendships[i][1]);
             }
@@ -35,15 +32,12 @@ class Solution {
 
         if(lst.isEmpty()) return 0;
         
-        System.out.println(lst);
-        System.out.println(mp);
         sz3 = lst.size();
         for(int i : languagesKnown){
             int cnt = 0;
             for(int j : lst){
                 if(mp.get(j).contains(i)) cnt++;
             }
-            System.out.println(i + " " + cnt);
             ans = ans < (sz3 - cnt) ? ans : (sz3 - cnt);
         }
         
