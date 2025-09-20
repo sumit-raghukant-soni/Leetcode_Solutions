@@ -1,15 +1,15 @@
 class Spreadsheet {
-    Map<String, Integer> mp = null;
+    int[][] mp2 = null;
     public Spreadsheet(int rows) {
-        mp = new HashMap<>();
+        mp2 = new int[rows+1][26];
     }
     
     public void setCell(String cell, int value) {
-        mp.put(cell, value);
+        mp2[Integer.valueOf(cell.substring(1))][cell.charAt(0) - 'A'] = value;
     }
     
     public void resetCell(String cell) {
-        mp.put(cell, 0);
+        mp2[Integer.valueOf(cell.substring(1))][cell.charAt(0) - 'A'] = 0;
     }
     
     public int getValue(String formula) {
@@ -31,13 +31,14 @@ class Spreadsheet {
             }
         }
 
-        // System.out.println(aflg + " " + a);
-        // System.out.println(bflg + " " + b);
-
-        if(aflg) v1 = mp.getOrDefault(a, 0);
+        if(aflg){
+            v1 = mp2[Integer.valueOf(a.substring(1))][a.charAt(0) - 'A'];
+        }
         else v1 = Integer.valueOf(a);
 
-        if(bflg) v2 = mp.getOrDefault(b, 0);
+        if(bflg){
+            v2 = mp2[Integer.valueOf(b.substring(1))][b.charAt(0) - 'A'];
+        }
         else v2 = Integer.valueOf(b);
 
 
