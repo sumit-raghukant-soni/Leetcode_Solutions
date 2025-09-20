@@ -14,6 +14,7 @@ class Spreadsheet {
     
     public int getValue(String formula) {
         int sz = formula.length(), v1 = 0, v2 = 0;
+        int aRow = -1, bRow = -1, aCol = 0, bCol = 0;
         String a = "", b = "";
         boolean aflg = false, bflg = false, flg = false;
 
@@ -22,24 +23,29 @@ class Spreadsheet {
                 flg = true; continue;
             }
             if(flg){
-                if(formula.charAt(i) >= 'A') bflg = true;
+                if(formula.charAt(i) >= 'A') bRow = formula.charAt(i) - 'A';
+                else bCol = (bCol*10) + (formula.charAt(i) - '0');
                 b += formula.charAt(i);
             }
             else {
-                if(formula.charAt(i) >= 'A') aflg = true;
+                if(formula.charAt(i) >= 'A') aRow = formula.charAt(i) - 'A';
+                else aCol = (aCol*10) + (formula.charAt(i) - '0');
                 a += formula.charAt(i);
             }
         }
 
-        if(aflg){
-            v1 = mp2[Integer.valueOf(a.substring(1))][a.charAt(0) - 'A'];
-        }
-        else v1 = Integer.valueOf(a);
+        // System.out.println(a + " " + aRow + " " + aCol);
+        // System.out.println(b + " " + bRow + " " + bCol);
 
-        if(bflg){
-            v2 = mp2[Integer.valueOf(b.substring(1))][b.charAt(0) - 'A'];
+        if(aRow != -1){
+            v1 = mp2[aCol][aRow];
         }
-        else v2 = Integer.valueOf(b);
+        else v1 = aCol;
+
+        if(bRow != -1){
+            v2 = mp2[bCol][bRow];
+        }
+        else v2 = bCol;
 
 
         return v1 + v2;
