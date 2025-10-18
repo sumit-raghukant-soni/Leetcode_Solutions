@@ -6,10 +6,10 @@ class Solution {
 
         curr = nums[0] - k;
         for(int i=0; i<sz; i++){
-            while(curr < (nums[i] - k) || used.contains(curr)){
+            if(curr < (nums[i] - k)) curr = nums[i] - k;
+            while(used.contains(curr)){
                 curr++;
             }
-            // System.out.println(nums[i] + " " + curr);
             if(Math.abs(curr - nums[i]) <= k){
                 cnt++;
                 used.add(curr);
