@@ -12,29 +12,15 @@ class Solution {
             if(c2+1 < n) flg[r1][c2+1] -= 1;
         }
 
-        // for(int i=0; i<n; i++){
-        //     for(int j=0; j<n; j++){
-        //         System.out.print(flg[i][j] + ",");
-        //     }
-        //     System.out.println();
-        // }
-
         for(int i=0; i<n; i++){
             int cnt = 0;
             for(int j=0; j<n; j++){
                 if(i+1 < n) flg[i+1][j] += flg[i][j];
                 cnt += flg[i][j];
-                System.out.println(i + ":" + j + " = " + cnt);
+                // System.out.println(i + ":" + j + " = " + cnt);
                 arr[i][j] = cnt;
             }
         }
-
-        // for(int i=0; i<n; i++){
-        //     for(int j=0; j<n; j++){
-        //         System.out.print(flg[i][j] + ",");
-        //     }
-        //     System.out.println();
-        // }
 
         return arr;
     }
