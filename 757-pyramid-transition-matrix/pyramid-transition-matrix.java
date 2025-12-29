@@ -1,47 +1,57 @@
 class Solution {
-    private Map<String, Set<Character>> mp = new HashMap<>();
-    private Set<String> st = new HashSet<>(), newSt = new HashSet<>();
     public boolean pyramidTransition(String bottom, List<String> allowed) {
-        int sz = allowed.size();
+        int sz1 = bottom.length(), sz2 = allowed.size();
+        PriorityQueue<String> q = new PriorityQueue<>();
+        Map<String, Set<Character>> mp = new HashMap<>();
+        Set<String> vis = new HashSet<>();
 
-        for(int i=0; i<sz; i++){
-            String base = allowed.get(i).substring(0, 2);
-            Character ch = allowed.get(i).charAt(2);
-            if(!mp.containsKey(base)) mp.put(base, new HashSet<>());
-            mp.get(base).add(ch);
+        for(String str : allowed){
+            String key = str.substring(0,2);
+            if(!mp.containsKey(key)){
+                mp.put(key, new HashSet<>());
+            }
+            mp.get(key).add(str.charAt(2));
         }
 
         // System.out.println(mp);
+        q.add(bottom);
 
-        // solve(0, bottom, "");
-        newSt.add(bottom);
-        sz = bottom.length();
-        while(--sz > 0){
-            // System.out.println(newSt + " " + sz);
-            if(newSt.isEmpty()) return false;
-            st.clear();
-            st.addAll(newSt);
-            newSt.clear();
-            for(String tmp : st){
-                solve(0, tmp, "");
+        while(!q.isEmpty()){
+            String curr = q.poll();
+            if(vis.contains(curr)) continue;
+            vis.add(curr);
+            int sz = curr.length();
+            if(sz == 1) return true;
+            List<String> lst = new ArrayList<>();
+            List<String> lst2 = new ArrayList<>();
+
+            // System.out.println(curr);
+            for(int i=0; i<sz-1; i++){
+                String sub = curr.charAt(i) + "" + curr.charAt(i+1);
+                if(!mp.containsKey(sub)) {
+                    lst.clear();
+                    break;
+                }
+                if(i == 0){
+                    for(char ch : mp.get(sub)){
+                        lst2.add(ch + "");
+                    }
+                }
+                else{
+                    for(char ch : mp.get(sub)){
+                        for(String s : lst){
+                            lst2.add(s + ch);
+                        }
+                    }
+                }
+                lst.clear();
+                lst.addAll(lst2);
+                lst2.clear();
             }
-            // System.out.println(newSt);
+            // System.out.println(lst);
+            for(String str : lst) q.add(str);
         }
 
-        return !newSt.isEmpty();
-    }
-
-    private void solve(int i, String str, String newStr){
-        if(i == str.length()-1){
-            newSt.add(newStr);
-            return;
-        }
-        if(!mp.containsKey(str.substring(i, i+2))) return;
-
-        // System.out.println( str + " " + str.substring(i, i+2) + " new " + newStr);
-        for( char ch : mp.get(str.substring(i, i+2)) ){
-            solve(i+1, str, newStr + ch);
-        }
-        
+        return false;
     }
 }
