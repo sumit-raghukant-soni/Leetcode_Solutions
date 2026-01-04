@@ -1,10 +1,16 @@
 class Solution {
+    Map<Integer, Integer> mp = new HashMap<>();
     public int sumFourDivisors(int[] nums) {
         int sz = nums.length, ans = 0;
 
         for(int i=0; i<sz; i++){
-            int tmp = calc(nums[i]);
-            ans += tmp > 0 ? 1 + nums[i] + tmp : 0;
+            int tmp = 0;
+            if(mp.containsKey(nums[i])) tmp = mp.get(nums[i]);
+            else{
+                tmp = calc(nums[i]);
+                mp.put(nums[i], tmp);
+            }
+            if(tmp > 0) ans += 1 + nums[i] + tmp;
         }
 
         return ans;
