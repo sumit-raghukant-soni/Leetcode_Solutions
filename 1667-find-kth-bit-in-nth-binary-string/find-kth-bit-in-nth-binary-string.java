@@ -1,28 +1,16 @@
 class Solution {
-    public String customReverse(String s){
-        int sz = s.length();
-        StringBuffer str = new StringBuffer(s);
-        char a, b;
-
-        for(int i=0; i<sz; i++){
-            a = str.charAt(i);
-            if(a == '0'){
-                str.setCharAt(i, '1');
-            }
-            else{
-                str.setCharAt(i, '0');
-            }
-        }
-
-        return str.reverse().toString();
-    }
     public char findKthBit(int n, int k) {
-        String ans = "0";
+        StringBuilder sb = new StringBuilder("0");
 
-        for(int i=0; i<n; i++){
-            ans = ans + "1" + customReverse(ans);
+        for(int i=1; i<n; i++){
+            String str = sb.toString();
+            sb.append('1');
+            for(int j=str.length()-1; j>=0; j--){
+                if(str.charAt(j) == '1') sb.append('0');
+                else sb.append('1');
+            }
         }
-
-        return ans.charAt(k-1);
+        // System.out.println(sb.toString());
+        return sb.toString().charAt(k-1);
     }
 }
