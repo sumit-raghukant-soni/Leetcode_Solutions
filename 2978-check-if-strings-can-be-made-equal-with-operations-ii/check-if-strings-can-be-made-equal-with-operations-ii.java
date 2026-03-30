@@ -6,9 +6,7 @@ class Solution {
         for(int i=0; i<n; i++){
             if((i&1) == 0) even1[s1.charAt(i) - 'a']++;
             else odd1[s1.charAt(i) - 'a']++;
-        }
 
-        for(int i=0; i<n; i++){
             if((i&1) == 0) even2[s2.charAt(i) - 'a']++;
             else odd2[s2.charAt(i) - 'a']++;
         }
