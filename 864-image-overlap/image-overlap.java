@@ -2,24 +2,6 @@ class Solution {
     public int largestOverlap(int[][] img1, int[][] img2) {
         int sz = img1.length;
         int ans = 0;
-        int r1[] = new int[sz], c1[] = new int[sz];
-        int r2[] = new int[sz], c2[] = new int[sz];
-
-        for(int i=0; i<sz; i++) {
-            for(int j=0; j<sz; j++) {
-                if(img1[i][j] == 1) {
-                    r1[i]++; c1[j]++;
-                }
-            }
-        }
-
-        for(int i=0; i<sz; i++) {
-            for(int j=0; j<sz; j++) {
-                if(img2[i][j] == 1) {
-                    r2[i]++; c2[j]++;
-                }
-            }
-        }
 
         for(int k=0; k<sz; k++) {
             for(int m=0; m<sz; m++) {
