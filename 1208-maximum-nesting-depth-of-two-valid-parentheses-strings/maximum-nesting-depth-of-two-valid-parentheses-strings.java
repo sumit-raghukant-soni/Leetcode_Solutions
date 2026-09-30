@@ -1,18 +1,25 @@
 class Solution {
     public int[] maxDepthAfterSplit(String seq) {
-        int sz = seq.length(), oCnt = 0, cCnt = 0;
+        int sz = seq.length(), cnt = 0, maxi = 0; 
         int ans[] = new int[sz];
+        char ch;
 
-        for(int i=0; i<sz; i++){
-            if(seq.charAt(i) == '('){
-                oCnt++;
-                if(oCnt%2 == 0) ans[i] = 1;
+        for(int i=0; i<sz; i++) {
+            ch = seq.charAt(i);
+            if(ch == ')')  cnt--;
+            maxi = maxi < cnt ? cnt : maxi;
+            if(ch == '(')  cnt++;
+        }
+
+        cnt = 0;
+        for(int i=0; i<sz; i++) {
+            ch = seq.charAt(i);
+            if(ch == ')')  cnt--;
+            if((cnt&1) == 1) {
+                ans[i] = 1;
             }
-            else{
-                cCnt++;
-                if(cCnt%2 == 0) ans[i] = 1;
-            } 
-            
+            else ans[i] = 0;
+            if(ch == '(')  cnt++;
         }
 
         return ans;
