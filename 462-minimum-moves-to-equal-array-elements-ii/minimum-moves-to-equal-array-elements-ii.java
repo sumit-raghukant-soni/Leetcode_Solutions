@@ -1,17 +1,36 @@
 class Solution {
     public int minMoves2(int[] nums) {
-        int sz = nums.length, ans = Integer.MAX_VALUE;
-        int a, b, aAns = 0, bAns = 0;
+        long s = Integer.MAX_VALUE;
+        long e = Integer.MIN_VALUE;
 
-        Arrays.sort(nums);
-
-        a = nums[sz/2]; b = nums[(sz-1)/2];
-
-        for(int i=0; i<sz; i++){
-            aAns += a > nums[i] ? (a - nums[i]) : (nums[i] - a);
-            bAns += b > nums[i] ? (b - nums[i]) : (nums[i] - b);
+        for (int i : nums) {
+            s = Math.min(s, i);
+            e = Math.max(e, i);
         }
 
-        return Math.min(aAns, bAns);
+        while (s < e) {
+            long mid = s + (e - s) / 2;
+
+            long a = solve(nums, mid);
+            long b = solve(nums, mid + 1);
+
+            if (a <= b) {
+                e = mid;
+            } else {
+                s = mid + 1;
+            }
+        }
+
+        return (int) solve(nums, s);
+    }
+
+    private long solve(int[] nums, long key) {
+        long sum = 0;
+
+        for (int num : nums) {
+            sum += Math.abs((long) num - key);
+        }
+
+        return sum;
     }
 }
